@@ -1,7 +1,13 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+
 
 android {
     namespace = "com.example.findfriend"
@@ -15,7 +21,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+
+        buildConfigField("String", "KAKAO_API_KEY", "\"${properties["kakao_api_key"] as? String ?: ""}\"")    }
 
     buildTypes {
         release {
@@ -35,11 +42,13 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
 dependencies {
-
+    // Kakao Login
+    implementation("com.kakao.sdk:v2-user:2.10.0")
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
