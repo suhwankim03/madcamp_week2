@@ -34,10 +34,12 @@ class LoginActivity : AppCompatActivity() {
             //"입력한 아이디 패스워드가 서버에 있는지 확인하는 내용 필요"
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
 
         createAccountButton.setOnClickListener{
-
+            val intent = Intent(this, CreateAccountActivity::class.java)
+            startActivity(intent)
         }
 
         loginByKaKaoButton.setOnClickListener{
