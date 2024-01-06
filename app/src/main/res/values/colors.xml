@@ -13,5 +13,6 @@
     <color name="bgyellow">#FFFFF8D6</color>
     <color name="bgorange">#FFFF9C72</color>
     <color name="buttonwhite">#66FFFFFF</color>
+    <color name="icongray">#FF3C3C43</color>
 
 </resources>

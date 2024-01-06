@@ -20,13 +20,13 @@ class StartActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-
+/*
         fadeInAnim = AnimationUtils.loadAnimation(this, R.anim.fade_in)
         appTitle = findViewById(R.id.appTitle)
         appLogo = findViewById(R.id.appLogo)
         appLogo.startAnimation(fadeInAnim)
         appTitle.startAnimation(fadeInAnim)
-
+*/
         // 일정 시간 지연 이후 실행하기 위한 코드
         Handler(Looper.getMainLooper()).postDelayed({
 

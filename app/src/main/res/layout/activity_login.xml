@@ -18,23 +18,23 @@
 
 
     <TextView
-        android:id="@+id/loginBackGround_welcomeText"
+        android:id="@+id/login_welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Welcome!"
         android:textColor="@color/carrot"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/loginBackGround_illust"
+        app:layout_constraintBottom_toTopOf="@id/login_illust"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
-        android:id="@+id/loginBackGround_illust"
+        android:id="@+id/login_illust"
         android:layout_width="300dp"
         android:layout_height="200dp"
         android:background="@drawable/login_illust"
-        app:layout_constraintBottom_toTopOf="@id/loginBackGround_id"
+        app:layout_constraintBottom_toTopOf="@id/login_id"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="30dp"
@@ -42,7 +42,7 @@
 
 
     <ImageView
-        android:id="@+id/loginBackGround_id"
+        android:id="@+id/login_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval"
@@ -50,17 +50,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="40dp"
-        android:clipToOutline="true"/>
+        android:layout_marginBottom="10dp"/>
 
     <ImageView
-        android:id="@+id/loginBackGround_id_ic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/login_ic_user"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_id"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_id"
-        app:layout_constraintLeft_toLeftOf="@id/loginBackGround_id"
+        android:id="@+id/login_id_ic"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/ic_email"
+        app:layout_constraintTop_toTopOf="@id/login_id"
+        app:layout_constraintBottom_toBottomOf="@id/login_id"
+        app:layout_constraintLeft_toLeftOf="@id/login_id"
+        android:scaleType="centerCrop"
         android:layout_marginLeft="25dp"/>
 
     <EditText
@@ -71,29 +71,29 @@
         android:hint="아이디"
         android:textColorHint="@color/hintgray"
         app:backgroundTint="@color/white"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_id"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_id"
-        app:layout_constraintLeft_toRightOf="@id/loginBackGround_id_ic"
-        android:layout_marginLeft="10dp" />
+        app:layout_constraintTop_toTopOf="@id/login_id"
+        app:layout_constraintBottom_toBottomOf="@id/login_id"
+        app:layout_constraintLeft_toRightOf="@id/login_id_ic"
+        android:layout_marginLeft="7.5dp" />
 
     <ImageView
-        android:id="@+id/loginBackGround_password"
+        android:id="@+id/login_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_id"
+        app:layout_constraintTop_toBottomOf="@id/login_id"
         android:layout_marginTop="15dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <ImageView
-        android:id="@+id/loginBackGround_key_ic"
+        android:id="@+id/login_key_ic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/login_ic_key"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_password"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_password"
-        app:layout_constraintLeft_toLeftOf="@id/loginBackGround_password"
+        app:layout_constraintTop_toTopOf="@id/login_password"
+        app:layout_constraintBottom_toBottomOf="@id/login_password"
+        app:layout_constraintLeft_toLeftOf="@id/login_password"
         android:layout_marginLeft="25dp"/>
 
     <EditText
@@ -104,17 +104,17 @@
         android:hint="비밀번호"
         android:textColorHint="@color/hintgray"
         app:backgroundTint="@color/white"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_password"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_password"
-        app:layout_constraintLeft_toRightOf="@id/loginBackGround_key_ic"
+        app:layout_constraintTop_toTopOf="@id/login_password"
+        app:layout_constraintBottom_toBottomOf="@id/login_password"
+        app:layout_constraintLeft_toRightOf="@id/login_key_ic"
         android:layout_marginLeft="10dp"/>
 
     <Button
-        android:id="@+id/loginBackGround_login"
+        android:id="@+id/login_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval_brown"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_password"
+        app:layout_constraintTop_toBottomOf="@id/login_password"
         android:layout_marginTop="15dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -127,8 +127,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_login"
-        app:layout_constraintBottom_toTopOf="@id/loginBackGround_createAccount">
+        app:layout_constraintTop_toBottomOf="@id/login_login"
+        app:layout_constraintBottom_toTopOf="@id/login_createAccount">
 
         <ImageView
             android:id="@+id/orLeftLine"
@@ -166,11 +166,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
-        android:id="@+id/loginBackGround_createAccount"
+        android:id="@+id/login_createAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval_downalpha"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_login"
+        app:layout_constraintTop_toBottomOf="@id/login_login"
         android:layout_marginTop="60dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -180,11 +180,11 @@
         android:textSize="18dp"/>
 
     <Button
-        android:id="@+id/loginBackGround_loginByKaKao"
+        android:id="@+id/login_loginByKaKao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval_downalpha"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_createAccount"
+        app:layout_constraintTop_toBottomOf="@id/login_createAccount"
         android:layout_marginTop="15dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
