@@ -6,8 +6,12 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.findfriend.ui.Login
+import com.example.findfriend.ui.LoginResponse
+
 import com.example.findfriend.ui.LoginService
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,15 +42,29 @@ class CreateAccountActivity : AppCompatActivity() {
 
             val login = Login(id = textId, password = textPw, nickname = textNick)
 
-            loginService.requestLogin(login).enqueue(object: Callback<Login>{
-                override fun onResponse(call: Call<Login>, response: Response<Login>) {
-                    var login = response.body()
+            loginService.requestLogin(login).enqueue(object: Callback<LoginResponse>{
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+                    val successValue = response.body()
+                    if (successValue != null) {
+                        val issuc = successValue.success
+                        if (issuc) {
+                            Toast.makeText(applicationContext, "성공", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(applicationContext, "아이디 중복", Toast.LENGTH_SHORT).show()
+                        }
+                    }
 
                 }
 
-                override fun onFailure(call: Call<Login>, t: Throwable) {
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
                     Log.e("API Request", "Error: ${t.message}")
                 }
+
+
+
 
             })
         }

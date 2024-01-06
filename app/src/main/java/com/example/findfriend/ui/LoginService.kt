@@ -9,9 +9,9 @@ interface LoginService {
 
 
     @Headers("Content-Type: application/json")
-    @POST("/sendserver")
+    @POST("/signup")
     fun requestLogin(
         @Body login: Login
-    ) : Call<Login>
+    ) : Call<LoginResponse>
 
 }
