@@ -7,3 +7,8 @@ data class Login(
     var password: String,
     var nickname: String
 )
+
+data class LoginResponse(
+    val success: Boolean
+)
+
