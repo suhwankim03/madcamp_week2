@@ -1,18 +1,14 @@
 package com.example.findfriend
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.findfriend.databinding.ActivityCreateAccountBinding
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import com.example.findfriend.databinding.ActivityLoginBinding
-import com.example.findfriend.ui.Login
-import com.example.findfriend.ui.LoginResponse
-
-import com.example.findfriend.ui.LoginService
-
+import com.example.findfriend.ui.Signup
+import com.example.findfriend.ui.SignupResponse
+import com.example.findfriend.ui.SignupService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,29 +27,33 @@ class CreateAccountActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        var loginService = retrofit.create(LoginService::class.java)
+        var SignupService = retrofit.create(SignupService::class.java)
 
         val button = binding.createAccountButton
         val id = binding.writeId
         val password = binding.writePassword
         val nickname = binding.writeNickname
+
         button.setOnClickListener {
             var textId = id.text.toString()
             var textPw = password.text.toString()
             var textNick = nickname.text.toString()
 
-            val login = Login(id = textId, password = textPw, nickname = textNick)
+            val signup = Signup(id = textId, password = textPw, nickname = textNick)
 
-            loginService.requestLogin(login).enqueue(object: Callback<LoginResponse>{
+            SignupService.requestSignup(signup).enqueue(object: Callback<SignupResponse>{
                 override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>
+                    call: Call<SignupResponse>,
+                    response: Response<SignupResponse>
                 ) {
                     val successValue = response.body()
                     if (successValue != null) {
                         val issuc = successValue.success
                         if (issuc) {
-                            Toast.makeText(applicationContext, "성공", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(applicationContext, "아이디 생성 성공", Toast.LENGTH_SHORT).show()
+                            //아이디 생성 후 메인으로 이동
+                            val intent = Intent(this@CreateAccountActivity, MainActivity::class.java)
+                            startActivity(intent)
                         } else {
                             Toast.makeText(applicationContext, "아이디 중복", Toast.LENGTH_SHORT).show()
                         }
@@ -61,13 +61,9 @@ class CreateAccountActivity : AppCompatActivity() {
 
                 }
 
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
                     Log.e("API Request", "Error: ${t.message}")
                 }
-
-
-
-
             })
         }
     }
