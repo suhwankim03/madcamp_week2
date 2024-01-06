@@ -142,7 +142,7 @@
         android:layout_marginLeft="10dp"/>
 
     <Button
-        android:id="@+id/createAccount_login"
+        android:id="@+id/createAccount_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval_brown"

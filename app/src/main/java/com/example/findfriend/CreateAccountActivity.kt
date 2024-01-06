@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.findfriend.databinding.ActivityLoginBinding
 import com.example.findfriend.ui.Login
 import com.example.findfriend.ui.LoginResponse
 
@@ -22,7 +23,8 @@ private lateinit var binding: ActivityCreateAccountBinding
 class CreateAccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_create_account)
+        binding= ActivityCreateAccountBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         var retrofit = Retrofit.Builder()
             .baseUrl("http://143.248.199.213:5000")
@@ -31,14 +33,14 @@ class CreateAccountActivity : AppCompatActivity() {
 
         var loginService = retrofit.create(LoginService::class.java)
 
-        val button = findViewById<Button>(R.id.createAccount_login)
-        val editText = findViewById<EditText>(R.id.writeId)
-        val editText2 = findViewById<EditText>(R.id.writePassword)
-        val editText3 = findViewById<EditText>(R.id.writeNickname)
+        val button = binding.createAccountButton
+        val id = binding.writeId
+        val password = binding.writePassword
+        val nickname = binding.writeNickname
         button.setOnClickListener {
-            var textId = editText.text.toString()
-            var textPw = editText2.text.toString()
-            var textNick = editText3.text.toString()
+            var textId = id.text.toString()
+            var textPw = password.text.toString()
+            var textNick = nickname.text.toString()
 
             val login = Login(id = textId, password = textPw, nickname = textNick)
 
