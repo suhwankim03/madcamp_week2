@@ -1,14 +1,10 @@
 package com.example.findfriend
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Button
 import com.example.findfriend.databinding.ActivityLoginBinding
-import com.kakao.sdk.common.util.Utility
-import org.json.JSONObject
+import com.example.findfriend.ui.CreateAccount.CreateAccountActivity
 
 private lateinit var binding: ActivityLoginBinding
 class LoginActivity : AppCompatActivity() {

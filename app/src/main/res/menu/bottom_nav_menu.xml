@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/navigation_myRoom"
         android:icon="@drawable/ic_message"
-        android:title="@string/title_myRoom" />
+        android:title="@string/title_myRoom"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/navigation_findRoom"
         android:icon="@drawable/ic_search"
-        android:title="@string/title_findRoom" />
+        android:title="@string/title_findRoom"
+        app:showAsAction="never"/>
 
     <item
         android:id="@+id/navigation_myProfile"
         android:icon="@drawable/login_ic_user"
-        android:title="@string/title_myProfile" />
+        android:title="@string/title_myProfile"
+        app:showAsAction="never"/>
 
 </menu>
