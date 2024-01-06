@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".CreateAccountActivity">
 
     <ImageView
-        android:id="@+id/loginBackGround"
+        android:id="@+id/createAccount_BackGround"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -18,23 +18,23 @@
 
 
     <TextView
-        android:id="@+id/loginBackGround_welcomeText"
+        android:id="@+id/createAccount_welcomeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Welcome!"
+        android:text="Join Us!"
         android:textColor="@color/carrot"
         android:textSize="30dp"
-        app:layout_constraintBottom_toTopOf="@id/loginBackGround_illust"
+        app:layout_constraintBottom_toTopOf="@id/createAccount_illust"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
-        android:id="@+id/loginBackGround_illust"
-        android:layout_width="300dp"
+        android:id="@+id/createAccount_illust"
+        android:layout_width="200dp"
         android:layout_height="200dp"
-        android:background="@drawable/login_illust"
-        app:layout_constraintBottom_toTopOf="@id/loginBackGround_id"
+        android:background="@drawable/createaccount_illust"
+        app:layout_constraintBottom_toTopOf="@id/createAccount_id"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="30dp"
@@ -42,7 +42,7 @@
 
 
     <ImageView
-        android:id="@+id/loginBackGround_id"
+        android:id="@+id/createAccount_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval"
@@ -50,17 +50,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginBottom="40dp"
-        android:clipToOutline="true"/>
+        android:layout_marginBottom="10dp"/>
 
     <ImageView
-        android:id="@+id/loginBackGround_id_ic"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/login_ic_user"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_id"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_id"
-        app:layout_constraintLeft_toLeftOf="@id/loginBackGround_id"
+        android:id="@+id/createAccount_id_ic"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/ic_email"
+        app:layout_constraintTop_toTopOf="@id/createAccount_id"
+        app:layout_constraintBottom_toBottomOf="@id/createAccount_id"
+        app:layout_constraintLeft_toLeftOf="@id/createAccount_id"
         android:layout_marginLeft="25dp"/>
 
     <EditText
@@ -71,29 +70,29 @@
         android:hint="아이디"
         android:textColorHint="@color/hintgray"
         app:backgroundTint="@color/white"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_id"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_id"
-        app:layout_constraintLeft_toRightOf="@id/loginBackGround_id_ic"
-        android:layout_marginLeft="10dp" />
+        app:layout_constraintTop_toTopOf="@id/createAccount_id"
+        app:layout_constraintBottom_toBottomOf="@id/createAccount_id"
+        app:layout_constraintLeft_toRightOf="@id/createAccount_id_ic"
+        android:layout_marginLeft="7.5dp" />
 
     <ImageView
-        android:id="@+id/loginBackGround_password"
+        android:id="@+id/createAccount_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_id"
+        app:layout_constraintTop_toBottomOf="@id/createAccount_id"
         android:layout_marginTop="15dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <ImageView
-        android:id="@+id/loginBackGround_key_ic"
+        android:id="@+id/createAccount_key_ic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/login_ic_key"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_password"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_password"
-        app:layout_constraintLeft_toLeftOf="@id/loginBackGround_password"
+        app:layout_constraintTop_toTopOf="@id/createAccount_password"
+        app:layout_constraintBottom_toBottomOf="@id/createAccount_password"
+        app:layout_constraintLeft_toLeftOf="@id/createAccount_password"
         android:layout_marginLeft="25dp"/>
 
     <EditText
@@ -104,93 +103,56 @@
         android:hint="비밀번호"
         android:textColorHint="@color/hintgray"
         app:backgroundTint="@color/white"
-        app:layout_constraintTop_toTopOf="@id/loginBackGround_password"
-        app:layout_constraintBottom_toBottomOf="@id/loginBackGround_password"
-        app:layout_constraintLeft_toRightOf="@id/loginBackGround_key_ic"
+        app:layout_constraintTop_toTopOf="@id/createAccount_password"
+        app:layout_constraintBottom_toBottomOf="@id/createAccount_password"
+        app:layout_constraintLeft_toRightOf="@id/createAccount_key_ic"
+        android:layout_marginLeft="10dp"/>
+
+    <ImageView
+        android:id="@+id/createAccount_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/oval"
+        app:layout_constraintTop_toBottomOf="@id/createAccount_password"
+        android:layout_marginTop="15dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ImageView
+        android:id="@+id/createAccount_nickname_ic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_ic_user"
+        app:layout_constraintTop_toTopOf="@id/createAccount_nickname"
+        app:layout_constraintBottom_toBottomOf="@id/createAccount_nickname"
+        app:layout_constraintLeft_toLeftOf="@id/createAccount_nickname"
+        android:layout_marginLeft="23.5dp"/>
+
+    <EditText
+        android:id="@+id/writeNickname"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:inputType="textNoSuggestions|textMultiLine"
+        android:hint="닉네임"
+        android:textColorHint="@color/hintgray"
+        app:backgroundTint="@color/white"
+        app:layout_constraintTop_toTopOf="@id/createAccount_nickname"
+        app:layout_constraintBottom_toBottomOf="@id/createAccount_nickname"
+        app:layout_constraintLeft_toRightOf="@id/createAccount_nickname_ic"
         android:layout_marginLeft="10dp"/>
 
     <Button
-        android:id="@+id/loginBackGround_login"
+        android:id="@+id/createAccount_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/oval_brown"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_password"
+        app:layout_constraintTop_toBottomOf="@id/createAccount_nickname"
         android:layout_marginTop="15dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:text="로그인"
+        android:text="회원가입"
         android:textSize="18dp"
         android:textColor="@color/white"
         android:clickable="true"/>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_login"
-        app:layout_constraintBottom_toTopOf="@id/loginBackGround_createAccount">
-
-        <ImageView
-            android:id="@+id/orLeftLine"
-            android:layout_width="130dp"
-            android:layout_height="2dp"
-            android:layout_marginLeft="20dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/orText"
-            android:background="@drawable/dashline"/>
-
-        <TextView
-            android:id="@+id/orText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:textColor="#AAFFFFFF"
-            android:text="OR"/>
-
-        <ImageView
-            android:id="@+id/orRightLine"
-            android:layout_width="130dp"
-            android:layout_height="2dp"
-            android:layout_marginRight="20dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/orText"
-            android:background="@drawable/dashline"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/loginBackGround_createAccount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/oval_downalpha"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_login"
-        android:layout_marginTop="60dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:clickable="true"
-        android:textColor="@color/carrot"
-        android:text="새로운 계정 생성"
-        android:textSize="18dp"/>
-
-    <Button
-        android:id="@+id/loginBackGround_loginByKaKao"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/oval_downalpha"
-        app:layout_constraintTop_toBottomOf="@id/loginBackGround_createAccount"
-        android:layout_marginTop="15dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:clickable="true"
-        android:textColor="@color/carrot"
-        android:text="카카오톡으로 로그인"
-        android:textSize="18dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
