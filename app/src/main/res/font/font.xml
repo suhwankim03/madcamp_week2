@@ -5,4 +5,8 @@
     android:fontWeight="400"
     android:font="@font/sejong_hospital_bold"/>
 
+    <font android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/kyobohandwriting2019"/>
+
 </font-family>
