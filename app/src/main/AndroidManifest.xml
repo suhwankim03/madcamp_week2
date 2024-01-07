@@ -18,9 +18,13 @@
         android:theme="@style/Theme.FindFriend"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".AddRoomActivity"
+            android:exported="false" />
+
         <service
             android:name=".ui.MyRoom.RoomService"
-            android:exported="false"></service>
+            android:exported="false" />
 
         <activity
             android:name=".CreateAccountActivity"

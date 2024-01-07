@@ -35,7 +35,6 @@ class MyRoomFragment : Fragment() {
     private lateinit var myRoomAdapter: MyRoomAdapter
     private lateinit var myRoomRecyclerView: RecyclerView
     private lateinit var myRoomViewModel : MyRoomViewModel
-    private lateinit var addbutton : Button
 
     private val binding get() = _binding!!
 
@@ -63,7 +62,7 @@ class MyRoomFragment : Fragment() {
 
         Log.d("tag","룸서비스(62행) 실행 완료")
         binding.swipeLayout.setOnRefreshListener {
-            val id = prefs.getString("email","email 검색 오류") // 이거 나중에 사용자 아이디를 받아와야 함.
+            val id = prefs.getString("email","email 검색 오류")
             roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
                 override fun onResponse(
                     call: Call<List<MyRoomDataModel>>,

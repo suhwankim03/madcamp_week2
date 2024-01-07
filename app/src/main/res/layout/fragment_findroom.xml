@@ -20,13 +20,13 @@
 
     <ImageButton
         android:id="@+id/addRoomButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/ic_plus_circle"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/plus"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="27dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/findRoomView"
