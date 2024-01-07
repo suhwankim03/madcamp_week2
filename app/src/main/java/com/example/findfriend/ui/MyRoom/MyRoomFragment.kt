@@ -61,7 +61,9 @@ class MyRoomFragment : Fragment() {
 
         Log.d("tag","룸서비스(62행) 실행 완료")
 
-        roomService.getRoom().enqueue(object : Callback<List<MyRoomDataModel>> {
+
+        val id = "asd" // 이거 나중에 사용자 아이디를 받아와야 함.
+        roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
             override fun onResponse(call: Call<List<MyRoomDataModel>>, response: Response<List<MyRoomDataModel>>) {
                 Log.d("69행","${response}")
                 if (response.isSuccessful) {

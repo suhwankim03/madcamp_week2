@@ -12,12 +12,12 @@ import retrofit2.http.Query
 interface RoomService {
     @Headers("Content-Type: application/json")
     @GET("/get_room")
-    fun getRoom() : Call<List<MyRoomDataModel>>
+    fun getRoom() : Call<List<FindRoomDataModel>>
 
     @Headers("Content-Type: application/json")
     @GET("/get_myroom")
     fun getRoom2(
         @Query("id") id: String
-    ): Call<List<FindRoomDataModel>>
+    ): Call<List<MyRoomDataModel>>
 
 }
