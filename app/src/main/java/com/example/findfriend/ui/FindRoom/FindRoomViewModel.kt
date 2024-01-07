@@ -3,11 +3,19 @@ package com.example.findfriend.ui.FindRoom
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.findfriend.ui.MyRoom.MyRoomDataModel
 
 class FindRoomViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is findroom Fragment"
+    private val findRoomList = mutableListOf<FindRoomDataModel?>()
+
+    fun getFindRoomList(): MutableList<FindRoomDataModel?>{
+        return findRoomList
     }
-    val text: LiveData<String> = _text
+    fun getMyRoom(position: Int): FindRoomDataModel?{
+        return findRoomList[position]
+    }
+    fun addMyRoom(findRoom: FindRoomDataModel?){
+        findRoomList.add(findRoom)
+    }
 }

@@ -1,14 +1,19 @@
 package com.example.findfriend.ui.FindRoom
 
 
+import android.graphics.Bitmap
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.findfriend.R
+import com.example.findfriend.ui.MyRoom.MyRoomDataModel
+import java.sql.Date
 
-class FindRoomAdapter(private val myRoomList: MutableList<FindRoomDataModel>):
+class FindRoomAdapter(private val findRoomList: MutableList<FindRoomDataModel?>):
     RecyclerView.Adapter<FindRoomAdapter.ViewHolder>() {
 
     private var itemClickListener : OnItemClickListener? = null
@@ -44,19 +49,17 @@ class FindRoomAdapter(private val myRoomList: MutableList<FindRoomDataModel>):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val myRoomModel = myRoomList[position]
-
-
-        holder.roomName.text = myRoomModel.roomName
-        holder.limTime.text = myRoomModel.limTime.toString()
-        holder.location.text = myRoomModel.location
-        holder.currentPeople.text = myRoomModel.currentPeople.toString()
-        holder.maxPeople.text = myRoomModel.maxPeople.toString()
-        holder.owner.text = myRoomModel.ownerName
+        val findRoomModel = findRoomList[position]
+        holder.roomName.text = findRoomModel?.roomName
+        holder.limTime.text = findRoomModel?.limTime.toString()
+        holder.location.text = findRoomModel?.location
+        holder.currentPeople.text = findRoomModel?.minPeople.toString()
+        holder.maxPeople.text = findRoomModel?.maxPeople.toString()
+        holder.owner.text = findRoomModel?.owner
     }
 
     override fun getItemCount(): Int {
-        return myRoomList.size
+        return findRoomList.size
     }
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
@@ -68,7 +71,7 @@ class FindRoomAdapter(private val myRoomList: MutableList<FindRoomDataModel>):
     }
 
     fun removeItem(position: Int) {
-        myRoomList.removeAt(position)
+        findRoomList.removeAt(position)
         notifyItemRemoved(position)
     }
 }
