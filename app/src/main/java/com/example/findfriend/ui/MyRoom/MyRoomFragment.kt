@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.findfriend.CreateAccountActivity
+import com.example.findfriend.GlobalApplication.Companion.prefs
 import com.example.findfriend.MainActivity
 import com.example.findfriend.R
 import com.example.findfriend.databinding.FragmentMyroomBinding
@@ -71,7 +72,7 @@ class MyRoomFragment : Fragment() {
 
         Log.d("tag","룸서비스(62행) 실행 완료")
         binding.swipeLayout.setOnRefreshListener {
-          val id = "asd"
+            val id = prefs.getString("email","email 검색 오류") // 이거 나중에 사용자 아이디를 받아와야 함.
             roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
                 override fun onResponse(call: Call<List<MyRoomDataModel>>, response: Response<List<MyRoomDataModel>>) {
                     Log.d("69행","${response}")
@@ -98,6 +99,23 @@ class MyRoomFragment : Fragment() {
                         // 서버 응답이 실패했을 때의 처리
                         binding.swipeLayout.isRefreshing = false
 
+        roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
+            override fun onResponse(call: Call<List<MyRoomDataModel>>, response: Response<List<MyRoomDataModel>>) {
+                Log.d("69행","${response}")
+                if (response.isSuccessful) {
+                    val myRoom = response.body()
+                    Log.d("73행","${myRoom}")
+                    for (i in 0 until myRoom!!.size){
+                        val roomID = myRoom[i].roomId
+                        val roomName = myRoom[i].roomName
+                        val roomDetail = myRoom[i].roomDetail
+                        val limTime = myRoom[i].limTime
+                        val location = myRoom[i].location
+                        val maxPeople = myRoom[i].maxPeople
+                        val currentPeople = myRoom[i].minPeople
+                        val ownerName = myRoom[i].owner
+                        myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
+                        Log.d("79행","${myRoomViewModel.getMyRoomList()}")
                     }
                 }
 

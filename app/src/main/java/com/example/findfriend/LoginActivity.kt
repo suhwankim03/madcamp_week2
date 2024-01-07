@@ -7,7 +7,9 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.bumptech.glide.Glide
+import com.example.findfriend.GlobalApplication.Companion.prefs
 import com.example.findfriend.databinding.ActivityLoginBinding
 import com.example.findfriend.ui.Login
 import com.example.findfriend.ui.LoginResponse
@@ -24,6 +26,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 private lateinit var binding: ActivityLoginBinding
 private lateinit var kakaoEmail: String
 private lateinit var kakaoId: String
@@ -31,11 +34,14 @@ private lateinit var kakaonickname: String
 private lateinit var kakaoprofile: String
 private lateinit var retrofit: Retrofit
 private lateinit var loginService:SignupService
+
+
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
 
         retrofit = Retrofit.Builder()
             .baseUrl("http://143.248.199.213:5000")
@@ -68,6 +74,8 @@ class LoginActivity : AppCompatActivity() {
                         if (successValue != null) {
                             val issuc = successValue.success
                             if (issuc) {
+                                prefs.setString("email", "${textId}")
+                                prefs.setString("password", "${textPw}")
                                 Toast.makeText(applicationContext, "로그인", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
