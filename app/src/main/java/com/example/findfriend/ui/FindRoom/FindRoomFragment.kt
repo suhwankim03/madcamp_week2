@@ -52,7 +52,7 @@ class FindRoomFragment : Fragment() {
 
 
         val id = "asd" // 이거 나중에 사용자 아이디를 받아와야 함.
-        roomService.getRoom2(id).enqueue(object : Callback<List<FindRoomDataModel>> {
+        roomService.getRoom().enqueue(object : Callback<List<FindRoomDataModel>> {
             override fun onResponse(call: Call<List<FindRoomDataModel>>, response: Response<List<FindRoomDataModel>>) {
                 Log.d("69행","${response}")
                 if (response.isSuccessful) {

@@ -1,20 +1,29 @@
 package com.example.findfriend.ui.MyRoom
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.findfriend.CreateAccountActivity
+import com.example.findfriend.MainActivity
 import com.example.findfriend.R
 import com.example.findfriend.databinding.FragmentMyroomBinding
 import com.example.findfriend.ui.RoomService
+import com.example.findfriend.ui.Signup
+import com.example.findfriend.ui.SignupResponse
 import com.example.findfriend.ui.SignupService
+import com.example.findfriend.ui.addRoom
+import com.example.findfriend.ui.addRoomResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,6 +43,7 @@ class MyRoomFragment : Fragment() {
     private lateinit var myRoomAdapter: MyRoomAdapter
     private lateinit var myRoomRecyclerView: RecyclerView
     private lateinit var myRoomViewModel : MyRoomViewModel
+    private lateinit var addbutton : Button
 
     private val binding get() = _binding!!
 
@@ -61,12 +71,14 @@ class MyRoomFragment : Fragment() {
 
         Log.d("tag","룸서비스(62행) 실행 완료")
         binding.swipeLayout.setOnRefreshListener {
-            roomService.getRoom().enqueue(object : Callback<List<MyRoomDataModel>> {
+          val id = "asd"
+            roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
                 override fun onResponse(call: Call<List<MyRoomDataModel>>, response: Response<List<MyRoomDataModel>>) {
                     Log.d("69행","${response}")
                     if (response.isSuccessful) {
                         val myRoom = response.body()
                         Log.d("73행","${myRoom}")
+
 
                         myRoomViewModel.clearFindRoomList()
                         for (i in 0 until myRoom!!.size){
@@ -85,6 +97,7 @@ class MyRoomFragment : Fragment() {
                     } else {
                         // 서버 응답이 실패했을 때의 처리
                         binding.swipeLayout.isRefreshing = false
+
                     }
                 }
 
@@ -93,6 +106,38 @@ class MyRoomFragment : Fragment() {
                     binding.swipeLayout.isRefreshing = false
                 }
             })
+        }
+
+
+        //방 생성 버튼 관련 로직 (전체 방 만들기 추가
+        addbutton=binding.plusbutton
+
+        addbutton.setOnClickListener{
+            val newRoom = addRoom(roomName = "1", roomDetail = "1", limTime = 0, location = "1", maxPeople = 0, minPeople = 0, owner = "1")
+
+            roomService.requestAddRoom(newRoom).enqueue(object: Callback<addRoomResponse>{
+                override fun onResponse(
+                    call: Call<addRoomResponse>,
+                    response: Response<addRoomResponse>
+                ) {
+                    val successValue = response.body()
+                    if (successValue != null) {
+                        val issuc = successValue.success
+                        if (issuc) {
+                            Toast.makeText(requireContext(), "방 생성!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(requireContext(), "방 생성 실패!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                }
+
+                override fun onFailure(call: Call<addRoomResponse>, t: Throwable) {
+                    Log.e("API Request", "Error: ${t.message}")
+                }
+            })
+
+
         }
 
 

@@ -9,7 +9,7 @@
         android:id="@+id/findRoomHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="나의 파티"
+        android:text="전체 파티"
         android:textSize="35dp"
         android:textColor="@color/carrot"
         android:fontFamily="@font/sejong_hospital_bold"
