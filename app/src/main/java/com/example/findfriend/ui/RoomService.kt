@@ -20,4 +20,10 @@ interface RoomService {
         @Query("id") id: String
     ): Call<List<MyRoomDataModel>>
 
+    @Headers("Content-Type: application/json")
+    @POST("/add_room")
+    fun requestAddRoom(
+        @Body addroom: addRoom
+    ) : Call<addRoomResponse>
+
 }
