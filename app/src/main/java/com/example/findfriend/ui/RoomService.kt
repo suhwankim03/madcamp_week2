@@ -10,6 +10,6 @@ import retrofit2.http.POST
 interface RoomService {
     @Headers("Content-Type: application/json")
     @GET("/get_room")
-    fun getRoom() : Call<MyRoomDataModel>
+    fun getRoom() : Call<List<MyRoomDataModel>>
 
 }
