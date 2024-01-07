@@ -18,4 +18,8 @@ class FindRoomViewModel : ViewModel() {
     fun addMyRoom(findRoom: FindRoomDataModel?){
         findRoomList.add(findRoom)
     }
+
+    fun clearFindRoomList() {
+        findRoomList.clear()
+    }
 }

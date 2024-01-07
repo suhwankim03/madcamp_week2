@@ -60,34 +60,41 @@ class MyRoomFragment : Fragment() {
         var roomService = retrofit.create(RoomService::class.java)
 
         Log.d("tag","룸서비스(62행) 실행 완료")
+        binding.swipeLayout.setOnRefreshListener {
+            roomService.getRoom().enqueue(object : Callback<List<MyRoomDataModel>> {
+                override fun onResponse(call: Call<List<MyRoomDataModel>>, response: Response<List<MyRoomDataModel>>) {
+                    Log.d("69행","${response}")
+                    if (response.isSuccessful) {
+                        val myRoom = response.body()
+                        Log.d("73행","${myRoom}")
 
-        roomService.getRoom().enqueue(object : Callback<List<MyRoomDataModel>> {
-            override fun onResponse(call: Call<List<MyRoomDataModel>>, response: Response<List<MyRoomDataModel>>) {
-                Log.d("69행","${response}")
-                if (response.isSuccessful) {
-                    val myRoom = response.body()
-                    Log.d("73행","${myRoom}")
-                    for (i in 0 until myRoom!!.size){
-                        val roomID = myRoom[i].roomId
-                        val roomName = myRoom[i].roomName
-                        val roomDetail = myRoom[i].roomDetail
-                        val limTime = myRoom[i].limTime
-                        val location = myRoom[i].location
-                        val maxPeople = myRoom[i].maxPeople
-                        val currentPeople = myRoom[i].minPeople
-                        val ownerName = myRoom[i].owner
-                        myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
-                        Log.d("79행","${myRoomViewModel.getMyRoomList()}")
+                        myRoomViewModel.clearFindRoomList()
+                        for (i in 0 until myRoom!!.size){
+                            val roomID = myRoom[i].roomId
+                            val roomName = myRoom[i].roomName
+                            val roomDetail = myRoom[i].roomDetail
+                            val limTime = myRoom[i].limTime
+                            val location = myRoom[i].location
+                            val maxPeople = myRoom[i].maxPeople
+                            val currentPeople = myRoom[i].minPeople
+                            val ownerName = myRoom[i].owner
+                            myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
+                            Log.d("79행","${myRoomViewModel.getMyRoomList()}")
+                        }
+                        binding.swipeLayout.isRefreshing = false
+                    } else {
+                        // 서버 응답이 실패했을 때의 처리
+                        binding.swipeLayout.isRefreshing = false
                     }
-                } else {
-                    // 서버 응답이 실패했을 때의 처리
                 }
-            }
 
-            override fun onFailure(call: Call<List<MyRoomDataModel>>, t: Throwable) {
-                // 네트워크 요청 자체가 실패했을 때의 처리
-            }
-        })
+                override fun onFailure(call: Call<List<MyRoomDataModel>>, t: Throwable) {
+                    // 네트워크 요청 자체가 실패했을 때의 처리
+                    binding.swipeLayout.isRefreshing = false
+                }
+            })
+        }
+
 
         return root
     }
