@@ -58,6 +58,7 @@ class FindRoomFragment : Fragment() {
                 if (response.isSuccessful) {
                     val findRoom = response.body()
                     Log.d("73행","${findRoom}")
+                    findRoomViewModel.clearFindRoomList()
                     for (i in 0 until findRoom!!.size){
                         val roomID = findRoom[i].roomId
                         val roomName = findRoom[i].roomName

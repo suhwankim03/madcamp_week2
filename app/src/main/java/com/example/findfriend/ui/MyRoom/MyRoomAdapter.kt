@@ -73,4 +73,5 @@ class MyRoomAdapter(private val myRoomList: MutableList<MyRoomDataModel?>):
         myRoomList.removeAt(position)
         notifyItemRemoved(position)
     }
+
 }
