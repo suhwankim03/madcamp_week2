@@ -99,6 +99,7 @@ class MyRoomFragment : Fragment() {
             }
         })
 
+        //방 생성 버튼 관련 로직 (전체 방 만들기 추가
         addbutton=binding.plusbutton
 
         addbutton.setOnClickListener{
