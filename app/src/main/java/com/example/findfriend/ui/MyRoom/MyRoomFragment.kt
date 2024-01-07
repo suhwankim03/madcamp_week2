@@ -1,6 +1,7 @@
 package com.example.findfriend.ui.MyRoom
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.findfriend.R
 import com.example.findfriend.databinding.FragmentMyroomBinding
+import com.example.findfriend.ui.RoomService
+import com.example.findfriend.ui.SignupService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.json.JSONArray
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -40,34 +51,37 @@ class MyRoomFragment : Fragment() {
         myRoomAdapter = MyRoomAdapter(myRoomViewModel.getMyRoomList())
         myRoomRecyclerView.adapter = myRoomAdapter
 
-        //JSON list에서 데이터 받아와서 넣는 코드
-        if (myRoomViewModel.getMyRoomList().isEmpty())
-        {
-            val inputStream = requireActivity().assets.open("myRoomList.json")
-            val reader = BufferedReader(InputStreamReader(inputStream))
-            val stringBuilder = StringBuilder()
-            var line: String?
-            while(reader.readLine().also {line = it} != null)
-            {
-                stringBuilder.append(line)
-            }
-            reader.close()
-            val jsonArrayString = stringBuilder.toString()
-            val jsonArray = JSONArray(jsonArrayString)
-            for (i in 0 until jsonArray.length()){
-                val jsonObject = jsonArray.getJSONObject(i)
-                val roomID = jsonObject.getInt("roomID")
-                val roomName = jsonObject.getString("roomName")
-                val roomDetail = jsonObject.getString("roomDetail")
-                val limTime = jsonObject.getInt("limTime")
-                val location = jsonObject.getString("location")
-                val maxPeople = jsonObject.getInt("maxPeople")
-                val currentPeople = jsonObject.getInt("currentPeople")
-                val ownerName = jsonObject.getString("ownerName")
-                myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
-            }
-        }
 
+        Log.d("tag","룸서비스(54행) 실행 완료")
+
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://143.248.199.213:5000")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        var roomService = retrofit.create(RoomService::class.java)
+
+        Log.d("tag","룸서비스(62행) 실행 완료")
+
+        //JSON list에서 데이터 받아와서 넣는 코드
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val response = roomService.getRoom().execute()
+                    if (response.isSuccessful) {
+                        val myRoom = response.body()
+                        myRoomViewModel.addMyRoom(myRoom)
+                        Log.d("73행","${myRoom}")
+                        // 서버에서 받아온 데이터를 사용
+                        withContext(Dispatchers.Main) {
+                            // UI 업데이트 등을 수행
+                        }
+                    } else {
+                        // 실패 시 처리
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
         return root
     }
 

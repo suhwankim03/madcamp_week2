@@ -1,20 +1,15 @@
-package com.example.findfriend.ui.MyRoom
+package com.example.findfriend.ui.FindRoom
 
 
-import android.graphics.Bitmap
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.findfriend.R
-import java.sql.Date
 
-class MyRoomAdapter(private val myRoomList: MutableList<MyRoomDataModel?>):
-    RecyclerView.Adapter<MyRoomAdapter.ViewHolder>() {
+class FindRoomAdapter(private val myRoomList: MutableList<FindRoomDataModel>):
+    RecyclerView.Adapter<FindRoomAdapter.ViewHolder>() {
 
     private var itemClickListener : OnItemClickListener? = null
     private var longClickListener: OnItemLongClickListener? = null
@@ -50,12 +45,14 @@ class MyRoomAdapter(private val myRoomList: MutableList<MyRoomDataModel?>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val myRoomModel = myRoomList[position]
-        holder.roomName.text = myRoomModel?.roomName
-        holder.limTime.text = myRoomModel?.limTime.toString()
-        holder.location.text = myRoomModel?.location
-        holder.currentPeople.text = myRoomModel?.minPeople.toString()
-        holder.maxPeople.text = myRoomModel?.maxPeople.toString()
-        holder.owner.text = myRoomModel?.owner
+
+
+        holder.roomName.text = myRoomModel.roomName
+        holder.limTime.text = myRoomModel.limTime.toString()
+        holder.location.text = myRoomModel.location
+        holder.currentPeople.text = myRoomModel.currentPeople.toString()
+        holder.maxPeople.text = myRoomModel.maxPeople.toString()
+        holder.owner.text = myRoomModel.ownerName
     }
 
     override fun getItemCount(): Int {
