@@ -90,7 +90,9 @@ class MyRoomFragment : Fragment() {
 
                             Log.d("79행", "${myRoomViewModel.getMyRoomList()}")
                         }
+                        myRoomAdapter.notifyDataSetChanged()
                         binding.swipeLayout.isRefreshing = false
+
                     } else {
                         // 서버 응답이 실패했을 때의 처리
                         binding.swipeLayout.isRefreshing = false
