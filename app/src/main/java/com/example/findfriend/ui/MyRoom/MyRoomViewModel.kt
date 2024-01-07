@@ -6,8 +6,15 @@ import androidx.lifecycle.ViewModel
 
 class MyRoomViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is my Room Fragment"
+    private val myRoomList = mutableListOf<MyRoomDataModel>()
+
+    fun getMyRoomList(): MutableList<MyRoomDataModel>{
+        return myRoomList
     }
-    val text: LiveData<String> = _text
+    fun getMyRoom(position: Int): MyRoomDataModel{
+        return myRoomList[position]
+    }
+    fun addMyRoom(myRoom: MyRoomDataModel){
+        myRoomList.add(myRoom)
+    }
 }
