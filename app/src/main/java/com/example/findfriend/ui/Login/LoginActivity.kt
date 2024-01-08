@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.example.findfriend.Settings.GlobalApplication
 import com.example.findfriend.Settings.GlobalApplication.Companion.prefs
 import com.example.findfriend.Settings.GlobalApplication.Companion.signupService
 import com.example.findfriend.ui.MainActivity
@@ -15,6 +16,7 @@ import com.example.findfriend.connectDB.LoginResponse
 import com.example.findfriend.connectDB.Signup
 import com.example.findfriend.connectDB.SignupResponse
 import com.example.findfriend.connectDB.SignupService
+import com.example.findfriend.ui.MyRoom.MyRoomDataModel
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -61,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
                             if (issuc) {
                                 prefs.setString("email", "${textId}")
                                 prefs.setString("password", "${textPw}")
-                                Toast.makeText(applicationContext, "로그인", Toast.LENGTH_SHORT).show()
+                                findNickName(textId)
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
@@ -109,6 +111,33 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun findNickName(id:String){
+        signupService.getNick(id).enqueue(object : Callback<String> {
+            override fun onResponse(
+                call: Call<String>,
+                response: Response<String>
+            ) {
+                if (response.isSuccessful) {
+                    val nick = response.body()
+                    if (nick != null) {
+                        prefs.setString("nickname", "$nick")
+                        Log.d("tag","${nick}이랑요,${prefs.getString("nickname","이거 디폴트값임 나오면 오류임")}")
+                        Toast.makeText(applicationContext, "로그인", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        applicationContext,
+                        "서버 응답이 실패했습니다.(${response.code()})",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Log.e("API Request", "Error: ${t.message}")
+            }
+        })
     }
 
     private fun updateLoginInfo() {

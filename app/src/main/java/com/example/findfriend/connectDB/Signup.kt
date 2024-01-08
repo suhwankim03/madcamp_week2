@@ -29,7 +29,8 @@ data class addRoom(
     @SerializedName("location") val location: String?,
     @SerializedName("max_people") val maxPeople: Int,
     @SerializedName("min_people") val minPeople: Int,
-    @SerializedName("owner") val owner: String?
+    @SerializedName("owner") val owner: String?,
+    @SerializedName("owner_nick") val ownerNickname: String
 )
 
 data class addRoomResponse(

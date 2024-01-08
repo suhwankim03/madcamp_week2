@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.findfriend.Settings.GlobalApplication
 import com.example.findfriend.databinding.FragmentMyprofileBinding
 
 class MyProfileFragment : Fragment() {
 
     private var _binding: FragmentMyprofileBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -30,7 +29,7 @@ class MyProfileFragment : Fragment() {
 
         val textView: TextView = binding.myprofileText
         notificationsViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+            textView.text = GlobalApplication.prefs.getString("nickname","이거 디폴트값임 나오면 오류임")
         }
         return root
     }

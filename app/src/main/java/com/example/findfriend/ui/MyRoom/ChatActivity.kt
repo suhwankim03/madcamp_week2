@@ -24,7 +24,8 @@ class ChatActivity : AppCompatActivity() {
         val limitTime = binding.LimitTime
         val location= binding.Location
         val maxNum= binding.MaxNumber
-        val owner= binding.owner
+        val ownerID= binding.owner
+        val ownerNickname= binding.ownerNick
         val current_people = binding.currentNumber
         val myID = GlobalApplication.prefs.getString("email","email 검색 오류")
         val completeButton =binding.completeButton
@@ -42,7 +43,8 @@ class ChatActivity : AppCompatActivity() {
         roomDetail.text = intent.getStringExtra("roomName")
         current_people.text = intent.getStringExtra("currentPeople")
         maxNum.text = intent.getStringExtra("maxPeople")
-        owner.text = intent.getStringExtra("owner")
+        ownerID.text = intent.getStringExtra("owner")
+        ownerNickname.text = intent.getStringExtra("ownerNickname")
 
         val textRoomID = (roomID.text as String).toInt()
 
