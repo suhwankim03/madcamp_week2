@@ -44,3 +44,12 @@ data class joinRoom(
 data class joinRoomResponse(
     val success: Boolean
 )
+data class withdraw(
+    @SerializedName("id") val myId: String?,
+    @SerializedName("room_id") val roomId: Int?
+)
+
+data class withdrawResponse(
+    val success: Boolean
+)
+
