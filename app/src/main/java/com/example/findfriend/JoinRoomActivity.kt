@@ -1,10 +1,20 @@
 package com.example.findfriend
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import com.example.findfriend.databinding.ActivityAddRoomBinding
 import com.example.findfriend.databinding.ActivityJoinRoomBinding
 import com.example.findfriend.ui.RoomService
+import com.example.findfriend.ui.addRoom
+import com.example.findfriend.ui.addRoomResponse
+import com.example.findfriend.ui.joinRoom
+import com.example.findfriend.ui.joinRoomResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -26,6 +36,7 @@ class JoinRoomActivity : AppCompatActivity() {
         roomService = retrofit.create(RoomService::class.java)
 
         val roomName = binding.RoomName
+        val roomID = binding.roomID
         //val roomDetail = binding.RoomDetail
         val limitTime = binding.LimitTime
         val location= binding.Location
@@ -36,6 +47,7 @@ class JoinRoomActivity : AppCompatActivity() {
         val completeButton =binding.completeButton
 
 
+        roomID.text = intent.getStringExtra("roomID")
         roomName.text = intent.getStringExtra("roomName")
         limitTime.text = intent.getStringExtra("limTime")
         location.text = intent.getStringExtra("location")
@@ -44,7 +56,34 @@ class JoinRoomActivity : AppCompatActivity() {
         maxNum.text = intent.getStringExtra("maxPeople")
         owner.text = intent.getStringExtra("owner")
 
+        val textRoomID = (roomID.text as String).toInt()
 
+        completeButton.setOnClickListener {
+            //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
+            val newRoom = joinRoom(roomId = textRoomID, myId= myID)
+            roomService.requestJoinRoom(newRoom).enqueue(object: Callback<joinRoomResponse> {
+                override fun onResponse(
+                    call: Call<joinRoomResponse>,
+                    response: Response<joinRoomResponse>
+                ) {
+                    val successValue = response.body()
+                    if (successValue != null) {
+                        val issuc = successValue.success
+                        if (issuc) {
+                            Toast.makeText(this@JoinRoomActivity, "방에 합류!", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@JoinRoomActivity, MainActivity::class.java)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this@JoinRoomActivity, "방에 못들어감!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
 
+                }
+
+                override fun onFailure(call: Call<joinRoomResponse>, t: Throwable) {
+                    Log.e("API Request", "Error: ${t.message}")
+                }
+            })
+        }
     }
 }

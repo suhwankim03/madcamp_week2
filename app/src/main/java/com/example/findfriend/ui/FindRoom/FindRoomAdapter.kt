@@ -28,7 +28,7 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
-        //val roomID: ImageView = itemView.findViewById(R.id.gallery_imageView)
+        val roomID: TextView = itemView.findViewById(R.id.roomID)
         //val roomDetail: ImageView = itemView.findViewById(R.id.gallery_imageView)
         val roomName: TextView = itemView.findViewById(R.id.roomName)
         val limTime: TextView = itemView.findViewById(R.id.limTime)
@@ -54,6 +54,7 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val findRoomModel = findRoomList[position]
+        holder.roomID.text = findRoomModel?.roomId.toString()
         holder.roomName.text = findRoomModel?.roomName
         holder.limTime.text = findRoomModel?.limTime.toString()
         holder.location.text = findRoomModel?.location
@@ -63,6 +64,7 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, JoinRoomActivity::class.java )
+            intent.putExtra("roomID","${holder.roomID.text}")
             intent.putExtra("roomName","${holder.roomName.text}")
             intent.putExtra("limTime","${holder.limTime.text}")
             intent.putExtra("location","${holder.location.text}")

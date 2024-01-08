@@ -35,3 +35,12 @@ data class addRoom(
 data class addRoomResponse(
     val success: Boolean
 )
+
+data class joinRoom(
+    @SerializedName("id") val myId: String?,
+    @SerializedName("room_id") val roomId: Int?
+)
+
+data class joinRoomResponse(
+    val success: Boolean
+)

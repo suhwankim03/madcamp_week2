@@ -26,4 +26,10 @@ interface RoomService {
         @Body addroom: addRoom
     ) : Call<addRoomResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("/join")
+    fun requestJoinRoom(
+        @Body joinroom: joinRoom
+    ) : Call<joinRoomResponse>
+
 }
