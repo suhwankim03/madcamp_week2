@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.findfriend.Settings.GlobalApplication
+import com.example.findfriend.Settings.GlobalApplication.Companion.roomService
 import com.example.findfriend.databinding.ActivityAddRoomBinding
 import com.example.findfriend.connectDB.RoomService
 import com.example.findfriend.connectDB.addRoom
@@ -20,19 +21,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 class AddRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddRoomBinding
-    private lateinit var retrofit: Retrofit
-    private lateinit var roomService: RoomService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        retrofit = Retrofit.Builder()
-            .baseUrl("http://143.248.199.213:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        roomService = retrofit.create(RoomService::class.java)
 
         val roomName = binding.writeRoomName
         val roomDetail = binding.writeRoomDetail

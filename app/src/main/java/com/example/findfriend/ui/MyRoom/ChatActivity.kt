@@ -13,23 +13,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChatBinding
-    private lateinit var retrofit: Retrofit
-    private lateinit var roomService: RoomService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        retrofit = Retrofit.Builder()
-            .baseUrl("http://143.248.199.213:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        roomService = retrofit.create(RoomService::class.java)
-
         val roomName = binding.RoomName
         val roomID = binding.roomID
-        //val roomDetail = binding.RoomDetail
+        val roomDetail = binding.RoomDetail
         val limitTime = binding.LimitTime
         val location= binding.Location
         val maxNum= binding.MaxNumber
@@ -48,7 +39,7 @@ class ChatActivity : AppCompatActivity() {
         roomName.text = intent.getStringExtra("roomName")
         limitTime.text = intent.getStringExtra("limTime")
         location.text = intent.getStringExtra("location")
-        //roomDetail.text = intent.getLongExtra("roomName",-1).toString()
+        roomDetail.text = intent.getStringExtra("roomName")
         current_people.text = intent.getStringExtra("currentPeople")
         maxNum.text = intent.getStringExtra("maxPeople")
         owner.text = intent.getStringExtra("owner")

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.findfriend.Settings.GlobalApplication.Companion.prefs
+import com.example.findfriend.Settings.GlobalApplication.Companion.roomService
 import com.example.findfriend.databinding.FragmentMyroomBinding
 import com.example.findfriend.connectDB.RoomService
 import com.example.findfriend.connectDB.delete
@@ -29,8 +30,6 @@ class MyRoomFragment : Fragment() {
     private lateinit var myRoomAdapter: MyRoomAdapter
     private lateinit var myRoomRecyclerView: RecyclerView
     private lateinit var myRoomViewModel : MyRoomViewModel
-    private lateinit var retrofit: Retrofit
-    private lateinit var roomService: RoomService
     private val id = prefs.getString("email","email 검색 오류")
     private val binding get() = _binding!!
 
@@ -48,12 +47,6 @@ class MyRoomFragment : Fragment() {
 
         myRoomAdapter = MyRoomAdapter(myRoomViewModel.getMyRoomList())
         myRoomRecyclerView.adapter = myRoomAdapter
-
-        retrofit = Retrofit.Builder().baseUrl("http://143.248.199.213:5000").addConverterFactory(GsonConverterFactory.create()).build()
-
-        roomService = retrofit.create(RoomService::class.java)
-
-        Log.d("tag","룸서비스(62행) 실행 완료")
 
         myRoomAdapter.setItemLongClickListener(object : MyRoomAdapter.OnItemLongClickListener {
             override fun onItemLongClick(position: Int): Boolean {

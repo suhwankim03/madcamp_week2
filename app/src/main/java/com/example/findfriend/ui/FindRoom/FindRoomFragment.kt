@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.findfriend.Settings.GlobalApplication.Companion.roomService
 import com.example.findfriend.databinding.FragmentFindroomBinding
 import com.example.findfriend.connectDB.RoomService
 import retrofit2.Call
@@ -24,7 +25,6 @@ class FindRoomFragment : Fragment() {
     private lateinit var findRoomAdapter: FindRoomAdapter
     private lateinit var findRoomRecyclerView: RecyclerView
     private lateinit var findRoomViewModel : FindRoomViewModel
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -44,19 +44,26 @@ class FindRoomFragment : Fragment() {
 
         val addRoomButton = binding.addRoomButton
 
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://143.248.199.213:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        UpdateUI()
 
-        var roomService = retrofit.create(RoomService::class.java)
+        binding.swipeLayout.setOnRefreshListener {
 
+            UpdateUI()
+        }
+
+
+        addRoomButton.setOnClickListener {
+            val intent = Intent(activity, AddRoomActivity::class.java)
+            startActivity(intent)
+        }
+        return root
+    }
+
+    private fun UpdateUI() {
         roomService.getAllRoom().enqueue(object : Callback<List<FindRoomDataModel>> {
             override fun onResponse(call: Call<List<FindRoomDataModel>>, response: Response<List<FindRoomDataModel>>) {
-                Log.d("69행","${response}")
                 if (response.isSuccessful) {
                     val findRoom = response.body()
-                    Log.d("73행","${findRoom}")
                     findRoomViewModel.clearFindRoomList()
                     for (i in 0 until findRoom!!.size){
                         val roomID = findRoom[i].roomId
@@ -68,24 +75,19 @@ class FindRoomFragment : Fragment() {
                         val currentPeople = findRoom[i].minPeople
                         val ownerName = findRoom[i].owner
                         findRoomViewModel.addMyRoom(FindRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
-                        Log.d("79행","${findRoomViewModel.getFindRoomList()}")
-                        findRoomAdapter.notifyDataSetChanged()
                     }
+                    findRoomAdapter.notifyDataSetChanged()
+                    binding.swipeLayout.isRefreshing = false
                 } else {
                     // 서버 응답이 실패했을 때의 처리
+                    binding.swipeLayout.isRefreshing = false
                 }
             }
-
             override fun onFailure(call: Call<List<FindRoomDataModel>>, t: Throwable) {
                 // 네트워크 요청 자체가 실패했을 때의 처리
+                binding.swipeLayout.isRefreshing = false
             }
         })
-
-        addRoomButton.setOnClickListener {
-            val intent = Intent(activity, AddRoomActivity::class.java)
-            startActivity(intent)
-        }
-        return root
     }
 
     override fun onDestroyView() {

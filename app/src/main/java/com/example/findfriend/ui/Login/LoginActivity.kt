@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.findfriend.Settings.GlobalApplication.Companion.prefs
+import com.example.findfriend.Settings.GlobalApplication.Companion.signupService
 import com.example.findfriend.ui.MainActivity
 import com.example.findfriend.databinding.ActivityLoginBinding
 import com.example.findfriend.connectDB.Login
@@ -27,8 +28,6 @@ private lateinit var kakaoEmail: String
 private lateinit var kakaoId: String
 private lateinit var kakaonickname: String
 private lateinit var kakaoprofile: String
-private lateinit var retrofit: Retrofit
-private lateinit var loginService: SignupService
 
 
 class LoginActivity : AppCompatActivity() {
@@ -36,14 +35,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
-        retrofit = Retrofit.Builder()
-            .baseUrl("http://143.248.199.213:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        loginService = retrofit.create(SignupService::class.java)
 
         val id= binding.writeId
         val password= binding.writePassword
@@ -58,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
 
             val login = Login(id = textId, password = textPw)
 
-            loginService.requestLogin(login).enqueue(object : Callback<LoginResponse> {
+            signupService.requestLogin(login).enqueue(object : Callback<LoginResponse> {
                 override fun onResponse(
                     call: Call<LoginResponse>,
                     response: Response<LoginResponse>
@@ -131,18 +122,18 @@ class LoginActivity : AppCompatActivity() {
 
                 val kakaologin = Signup(id = kakaoEmail, password = kakaoId, nickname = kakaonickname)
 
-                loginService.requestSignup(kakaologin).enqueue(object: Callback<SignupResponse>{
+                signupService.requestSignup(kakaologin).enqueue(object: Callback<SignupResponse>{
                     override fun onResponse(
                         call: Call<SignupResponse>,
                         response: Response<SignupResponse>
                     ) {
+                        prefs.setString("email", "${kakaoEmail}")
+                        prefs.setString("password", "${kakaoId}")
+                        prefs.setString("nickname", "${kakaonickname}")
                         val successValue = response.body()
                         if (successValue != null) {
                             val issuc = successValue.success
                             if (issuc) {
-                                prefs.setString("email", "${kakaoEmail}")
-                                prefs.setString("password", "${kakaoId}")
-                                prefs.setString("nickname", "${kakaonickname}")
                                 Toast.makeText(applicationContext, "카카오톡 회원가입", Toast.LENGTH_SHORT).show()
                                 //아이디 생성 후 메인으로 이동
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)

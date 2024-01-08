@@ -22,13 +22,13 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
 
 
         val roomID: TextView = itemView.findViewById(R.id.roomID)
-        //val roomDetail: ImageView = itemView.findViewById(R.id.gallery_imageView)
         val roomName: TextView = itemView.findViewById(R.id.roomName)
         val limTime: TextView = itemView.findViewById(R.id.limTime)
         val location: TextView = itemView.findViewById(R.id.location)
         val currentPeople: TextView = itemView.findViewById(R.id.currentNumber)
         val maxPeople: TextView = itemView.findViewById(R.id.maxNumber)
         val owner: TextView = itemView.findViewById(R.id.owner)
+        val roomDetail: TextView = itemView.findViewById(R.id.roomDetail)
 
         init{
             itemView.setOnClickListener{
@@ -54,6 +54,7 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
         holder.currentPeople.text = findRoomModel?.minPeople.toString()
         holder.maxPeople.text = findRoomModel?.maxPeople.toString()
         holder.owner.text = findRoomModel?.owner
+        holder.roomDetail.text = findRoomModel?.roomDetail
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, JoinRoomActivity::class.java )
@@ -64,6 +65,7 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
             intent.putExtra("currentPeople","${holder.currentPeople.text}")
             intent.putExtra("maxPeople","${holder.maxPeople.text}")
             intent.putExtra("owner","${holder.owner.text}")
+            intent.putExtra("roomDetail","${holder.roomDetail.text}")
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
 
