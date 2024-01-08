@@ -7,15 +7,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.findfriend.Settings.GlobalApplication
+import com.example.findfriend.Settings.GlobalApplication.Companion.signupService
 import com.example.findfriend.ui.MainActivity
 import com.example.findfriend.connectDB.Signup
 import com.example.findfriend.connectDB.SignupResponse
-import com.example.findfriend.connectDB.SignupService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class CreateAccountActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateAccountBinding
@@ -23,13 +21,6 @@ class CreateAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://143.248.199.213:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        var SignupService = retrofit.create(SignupService::class.java)
 
         val button = binding.createAccountButton
         val id = binding.writeId
@@ -43,7 +34,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
             val signup = Signup(id = textId, password = textPw, nickname = textNick)
 
-            SignupService.requestSignup(signup).enqueue(object: Callback<SignupResponse>{
+            signupService.requestSignup(signup).enqueue(object: Callback<SignupResponse>{
                 override fun onResponse(
                     call: Call<SignupResponse>,
                     response: Response<SignupResponse>

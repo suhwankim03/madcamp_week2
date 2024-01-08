@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.example.findfriend.Settings.GlobalApplication
+import com.example.findfriend.Settings.GlobalApplication.Companion.roomService
 import com.example.findfriend.databinding.ActivityJoinRoomBinding
 import com.example.findfriend.connectDB.RoomService
 import com.example.findfriend.connectDB.joinRoom
@@ -20,23 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 class JoinRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityJoinRoomBinding
-    private lateinit var retrofit: Retrofit
-    private lateinit var roomService: RoomService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityJoinRoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        retrofit = Retrofit.Builder()
-            .baseUrl("http://143.248.199.213:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        roomService = retrofit.create(RoomService::class.java)
-
         val roomName = binding.RoomName
         val roomID = binding.roomID
-        //val roomDetail = binding.RoomDetail
+        val roomDetail = binding.RoomDetail
         val limitTime = binding.LimitTime
         val location= binding.Location
         val maxNum= binding.MaxNumber
@@ -50,7 +42,7 @@ class JoinRoomActivity : AppCompatActivity() {
         roomName.text = intent.getStringExtra("roomName")
         limitTime.text = intent.getStringExtra("limTime")
         location.text = intent.getStringExtra("location")
-        //roomDetail.text = intent.getLongExtra("roomName",-1).toString()
+        roomDetail.text = intent.getStringExtra("roomDetail")
         current_people.text = intent.getStringExtra("currentPeople")
         maxNum.text = intent.getStringExtra("maxPeople")
         owner.text = intent.getStringExtra("owner")
