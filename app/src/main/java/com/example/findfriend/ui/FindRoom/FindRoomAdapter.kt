@@ -27,7 +27,8 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
         val location: TextView = itemView.findViewById(R.id.location)
         val currentPeople: TextView = itemView.findViewById(R.id.currentNumber)
         val maxPeople: TextView = itemView.findViewById(R.id.maxNumber)
-        val owner: TextView = itemView.findViewById(R.id.owner)
+        val ownerID: TextView = itemView.findViewById(R.id.ownerID)
+        val ownerNickname: TextView = itemView.findViewById(R.id.ownerNickname)
         val roomDetail: TextView = itemView.findViewById(R.id.roomDetail)
 
         init{
@@ -47,13 +48,15 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val findRoomModel = findRoomList[position]
+
         holder.roomID.text = findRoomModel?.roomId.toString()
         holder.roomName.text = findRoomModel?.roomName
         holder.limTime.text = findRoomModel?.limTime.toString()
         holder.location.text = findRoomModel?.location
         holder.currentPeople.text = findRoomModel?.minPeople.toString()
         holder.maxPeople.text = findRoomModel?.maxPeople.toString()
-        holder.owner.text = findRoomModel?.owner
+        holder.ownerID.text = findRoomModel?.ownerID
+        holder.ownerNickname.text = findRoomModel?.ownerNickname
         holder.roomDetail.text = findRoomModel?.roomDetail
 
         holder.itemView.setOnClickListener {
@@ -64,7 +67,8 @@ class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
             intent.putExtra("location","${holder.location.text}")
             intent.putExtra("currentPeople","${holder.currentPeople.text}")
             intent.putExtra("maxPeople","${holder.maxPeople.text}")
-            intent.putExtra("owner","${holder.owner.text}")
+            intent.putExtra("owner","${holder.ownerID.text}")
+            intent.putExtra("owner_nick","${holder.ownerNickname.text}")
             intent.putExtra("roomDetail","${holder.roomDetail.text}")
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }

@@ -85,8 +85,9 @@ class MyRoomFragment : Fragment() {
                         val location = myRoom[i].location
                         val maxPeople = myRoom[i].maxPeople
                         val currentPeople = myRoom[i].minPeople
-                        val ownerName = myRoom[i].owner
-                        myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
+                        val ownerId = myRoom[i].ownerID
+                        val ownerNickname = myRoom[i].ownerNickname
+                        myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerId, ownerNickname))
                     }
                     myRoomAdapter.notifyDataSetChanged()
                     binding.swipeLayout.isRefreshing = false
@@ -105,13 +106,13 @@ class MyRoomFragment : Fragment() {
     private fun showDeleteDialog(position: Int) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("파티 탈퇴")
-        builder.setMessage("파티에서 나가시겠습니까?/n 방장이 나갈시 파티는 사라집니다.")
+        builder.setMessage("파티에서 나가시겠습니까? 방장이 나갈시 파티는 사라집니다.")
 
         builder.setPositiveButton("나가기") { _, _ ->
             val thisRoom = myRoomViewModel.getMyRoom(position)
 
             val roomID = thisRoom?.roomId
-            val roomOwner = thisRoom?.owner
+            val roomOwner = thisRoom?.ownerID
 
             if (id==roomOwner){ //방장이면 방 자체를 삭제
                 deleteRoom(roomID)

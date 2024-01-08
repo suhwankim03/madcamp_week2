@@ -35,7 +35,8 @@ class MyRoomAdapter(val myRoomList: MutableList<MyRoomDataModel?>):
         val location: TextView = itemView.findViewById(R.id.location)
         val currentPeople: TextView = itemView.findViewById(R.id.currentNumber)
         val maxPeople: TextView = itemView.findViewById(R.id.maxNumber)
-        val owner: TextView = itemView.findViewById(R.id.owner)
+        val ownerID: TextView = itemView.findViewById(R.id.ownerID)
+        val ownerNickname: TextView = itemView.findViewById(R.id.ownerNickname)
 
         init{
             itemView.setOnClickListener{
@@ -67,7 +68,8 @@ class MyRoomAdapter(val myRoomList: MutableList<MyRoomDataModel?>):
         holder.location.text = myRoomModel?.location
         holder.currentPeople.text = myRoomModel?.minPeople.toString()
         holder.maxPeople.text = myRoomModel?.maxPeople.toString()
-        holder.owner.text = myRoomModel?.owner
+        holder.ownerID.text = myRoomModel?.ownerID.toString()
+        holder.ownerNickname.text = myRoomModel?.ownerNickname.toString()
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, ChatActivity::class.java )
@@ -77,7 +79,8 @@ class MyRoomAdapter(val myRoomList: MutableList<MyRoomDataModel?>):
             intent.putExtra("location","${holder.location.text}")
             intent.putExtra("currentPeople","${holder.currentPeople.text}")
             intent.putExtra("maxPeople","${holder.maxPeople.text}")
-            intent.putExtra("owner","${holder.owner.text}")
+            intent.putExtra("owner","${holder.ownerID.text}")
+            intent.putExtra("owner_nick","${holder.ownerNickname.text}")
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
 

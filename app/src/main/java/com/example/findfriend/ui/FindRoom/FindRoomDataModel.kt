@@ -10,8 +10,9 @@ data class FindRoomDataModel(
     @SerializedName("location") val location: String?,
     @SerializedName("max_people") val maxPeople: Int,
     @SerializedName("min_people") val minPeople: Int,
-    @SerializedName("owner") val owner: String?
+    @SerializedName("owner") val ownerID: String?,
+    @SerializedName("owner_nick") val ownerNickname: String?
 
 ){
-    constructor() : this(0, null, null, 0, null, 0, 0, null)
+    constructor() : this(0, null, null, 0, null, 0, 0, null,null)
 }

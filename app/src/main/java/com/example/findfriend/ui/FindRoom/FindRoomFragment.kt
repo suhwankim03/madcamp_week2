@@ -73,8 +73,9 @@ class FindRoomFragment : Fragment() {
                         val location = findRoom[i].location
                         val maxPeople = findRoom[i].maxPeople
                         val currentPeople = findRoom[i].minPeople
-                        val ownerName = findRoom[i].owner
-                        findRoomViewModel.addMyRoom(FindRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
+                        val ownerID = findRoom[i].ownerID
+                        val ownerNickname = findRoom[i].ownerNickname
+                        findRoomViewModel.addMyRoom(FindRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerID,ownerNickname))
                     }
                     findRoomAdapter.notifyDataSetChanged()
                     binding.swipeLayout.isRefreshing = false
