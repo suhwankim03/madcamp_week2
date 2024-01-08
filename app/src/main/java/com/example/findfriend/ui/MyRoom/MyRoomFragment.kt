@@ -24,6 +24,8 @@ import com.example.findfriend.ui.FindRoom.FindRoomDataModel
 import com.example.findfriend.ui.RoomService
 import com.example.findfriend.ui.addRoom
 import com.example.findfriend.ui.addRoomResponse
+import com.example.findfriend.ui.delete
+import com.example.findfriend.ui.deleteResponse
 import com.example.findfriend.ui.withdraw
 import com.example.findfriend.ui.withdrawResponse
 import com.google.gson.annotations.SerializedName
@@ -127,14 +129,17 @@ class MyRoomFragment : Fragment() {
         builder.setMessage("파티에서 나가시겠습니까?")
 
         builder.setPositiveButton("나가기") { _, _ ->
-
-            //현재 선택한 방의 RoomID와 로그인 사람 ID를 가져와서 DB에서 삭제하는 코드 넣기
             val thisRoom = myRoomViewModel.getMyRoom(position)
 
-            val RoomID = thisRoom?.roomId
-            Log.d("tag","${RoomID}")
+            val roomID = thisRoom?.roomId
+            val roomOwner = thisRoom?.owner
 
-            withdrawRoom(RoomID)
+            if (id==roomOwner){ //방장이면 방 자체를 삭제
+                deleteRoom(roomID)
+            } else{ //방장이 아니면 단순 나가기
+                withdrawRoom(roomID)
+            }
+
             UpdateUI()
         }
 
@@ -157,7 +162,7 @@ class MyRoomFragment : Fragment() {
                     if (issuc) {
                         //성공시 리턴하고 싶으면 여기 적기
                     } else {
-                        //성공시 리턴하고 싶으면 여기 적기
+                        //실패시 리턴하고 싶으면 여기 적기
                     }
                 }
             }
@@ -165,6 +170,28 @@ class MyRoomFragment : Fragment() {
                 Log.e("API Request", "Error: ${t.message}")
             }
         })
+    }
 
+    private fun deleteRoom(roomID: Int?){
+        val delete = delete(roomId = roomID, myId = id)
+        roomService.requestDelete(delete).enqueue(object: Callback<deleteResponse> {
+            override fun onResponse(
+                call: Call<deleteResponse>,
+                response: Response<deleteResponse>
+            ) {
+                val successValue = response.body()
+                if (successValue != null) {
+                    val issuc = successValue.success
+                    if (issuc) {
+                        //성공시 리턴하고 싶으면 여기 적기
+                    } else {
+                        //실패시 리턴하고 싶으면 여기 적기
+                    }
+                }
+            }
+            override fun onFailure(call: Call<deleteResponse>, t: Throwable) {
+                Log.e("API Request", "Error: ${t.message}")
+            }
+        })
     }
 }

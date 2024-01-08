@@ -39,4 +39,10 @@ interface RoomService {
         @Body withdraw: withdraw
     ) : Call<withdrawResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST("/delete")
+    fun requestDelete(
+        @Body delete: delete
+    ) : Call<deleteResponse>
+
 }
