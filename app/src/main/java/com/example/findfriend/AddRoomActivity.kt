@@ -46,8 +46,8 @@ class AddRoomActivity : AppCompatActivity() {
 
         completeButton.setOnClickListener {
             //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
-            val newRoom = addRoom(roomName = roomName.toString(), roomDetail = roomDetail.toString(), limTime = limitTime.toString().toInt(), location = location.toString(), maxPeople = maxNum.toString().toInt(), minPeople = current_people, owner = myID)
-                roomService.requestAddRoom(newRoom).enqueue(object: Callback<addRoomResponse> {
+            val newRoom = addRoom(roomName = roomName.text.toString(), roomDetail = roomDetail.text.toString(), limTime = limitTime.text.toString().toInt(), location = location.text.toString(), maxPeople = maxNum.text.toString().toInt(), minPeople = current_people, owner = myID)
+            roomService.requestAddRoom(newRoom).enqueue(object: Callback<addRoomResponse> {
                 override fun onResponse(
                     call: Call<addRoomResponse>,
                     response: Response<addRoomResponse>

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -73,6 +74,7 @@ class FindRoomFragment : Fragment() {
                         val ownerName = findRoom[i].owner
                         findRoomViewModel.addMyRoom(FindRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
                         Log.d("79행","${findRoomViewModel.getFindRoomList()}")
+                        findRoomAdapter.notifyDataSetChanged()
                     }
                 } else {
                     // 서버 응답이 실패했을 때의 처리
@@ -88,6 +90,9 @@ class FindRoomFragment : Fragment() {
             val intent = Intent(activity, AddRoomActivity::class.java)
             startActivity(intent)
         }
+
+
+
 
         return root
     }
