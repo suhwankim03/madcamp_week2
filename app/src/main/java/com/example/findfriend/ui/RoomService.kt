@@ -32,4 +32,11 @@ interface RoomService {
         @Body joinroom: joinRoom
     ) : Call<joinRoomResponse>
 
+
+    @Headers("Content-Type: application/json")
+    @POST("/withdraw")
+    fun requestWithdraw(
+        @Body withdraw: withdraw
+    ) : Call<withdrawResponse>
+
 }

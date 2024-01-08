@@ -19,9 +19,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".JoinRoomActivity"
             android:exported="false" />
-
         <activity
             android:name=".AddRoomActivity"
             android:exported="false" />

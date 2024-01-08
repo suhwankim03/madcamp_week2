@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -35,6 +36,8 @@ class MyRoomFragment : Fragment() {
     private lateinit var myRoomAdapter: MyRoomAdapter
     private lateinit var myRoomRecyclerView: RecyclerView
     private lateinit var myRoomViewModel : MyRoomViewModel
+    private lateinit var retrofit: Retrofit
+    private lateinit var roomService: RoomService
 
     private val binding get() = _binding!!
 
@@ -53,55 +56,22 @@ class MyRoomFragment : Fragment() {
         myRoomAdapter = MyRoomAdapter(myRoomViewModel.getMyRoomList())
         myRoomRecyclerView.adapter = myRoomAdapter
 
-        var retrofit = Retrofit.Builder()
-            .baseUrl("http://143.248.199.213:5000")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        retrofit = Retrofit.Builder().baseUrl("http://143.248.199.213:5000").addConverterFactory(GsonConverterFactory.create()).build()
 
-        var roomService = retrofit.create(RoomService::class.java)
+        roomService = retrofit.create(RoomService::class.java)
 
         Log.d("tag","룸서비스(62행) 실행 완료")
+
+        myRoomAdapter.setItemLongClickListener(object : MyRoomAdapter.OnItemLongClickListener {
+            override fun onItemLongClick(position: Int): Boolean {
+                showDeleteDialog(position)
+                return true
+            }
+        })
+
+        UpdateUI()
         binding.swipeLayout.setOnRefreshListener {
-            val id = prefs.getString("email","email 검색 오류")
-            roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
-                override fun onResponse(
-                    call: Call<List<MyRoomDataModel>>,
-                    response: Response<List<MyRoomDataModel>>
-                ) {
-                    Log.d("69행", "${response}")
-                    if (response.isSuccessful) {
-                        val myRoom = response.body()
-                        Log.d("73행", "${myRoom}")
-
-
-                        myRoomViewModel.clearMyRoomList()
-                        for (i in 0 until myRoom!!.size) {
-                            val roomID = myRoom[i].roomId
-                            val roomName = myRoom[i].roomName
-                            val roomDetail = myRoom[i].roomDetail
-                            val limTime = myRoom[i].limTime
-                            val location = myRoom[i].location
-                            val maxPeople = myRoom[i].maxPeople
-                            val currentPeople = myRoom[i].minPeople
-                            val ownerName = myRoom[i].owner
-                            myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
-
-
-                            Log.d("79행", "${myRoomViewModel.getMyRoomList()}")
-                        }
-                        myRoomAdapter.notifyDataSetChanged()
-                        binding.swipeLayout.isRefreshing = false
-
-                    } else {
-                        // 서버 응답이 실패했을 때의 처리
-                        binding.swipeLayout.isRefreshing = false
-                    }
-                }
-                override fun onFailure(call: Call<List<MyRoomDataModel>>, t: Throwable) {
-                    // 네트워크 요청 자체가 실패했을 때의 처리
-                    binding.swipeLayout.isRefreshing = false
-                }
-            })
+            UpdateUI()
         }
 
         return root
@@ -111,4 +81,76 @@ class MyRoomFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    fun UpdateUI(){
+        val id = prefs.getString("email","email 검색 오류")
+        roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
+            override fun onResponse(
+                call: Call<List<MyRoomDataModel>>,
+                response: Response<List<MyRoomDataModel>>
+            ) {
+                Log.d("69행", "${response}")
+                if (response.isSuccessful) {
+                    val myRoom = response.body()
+                    Log.d("73행", "${myRoom}")
+
+
+                    myRoomViewModel.clearMyRoomList()
+                    for (i in 0 until myRoom!!.size) {
+                        val roomID = myRoom[i].roomId
+                        val roomName = myRoom[i].roomName
+                        val roomDetail = myRoom[i].roomDetail
+                        val limTime = myRoom[i].limTime
+                        val location = myRoom[i].location
+                        val maxPeople = myRoom[i].maxPeople
+                        val currentPeople = myRoom[i].minPeople
+                        val ownerName = myRoom[i].owner
+                        myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
+
+
+                        Log.d("79행", "${myRoomViewModel.getMyRoomList()}")
+                    }
+                    myRoomAdapter.notifyDataSetChanged()
+                    binding.swipeLayout.isRefreshing = false
+
+                } else {
+                    // 서버 응답이 실패했을 때의 처리
+                    binding.swipeLayout.isRefreshing = false
+                }
+            }
+            override fun onFailure(call: Call<List<MyRoomDataModel>>, t: Throwable) {
+                // 네트워크 요청 자체가 실패했을 때의 처리
+                binding.swipeLayout.isRefreshing = false
+            }
+        })
+    }
+    private fun showDeleteDialog(position: Int) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("파티 탈퇴")
+        builder.setMessage("파티에서 나가시겠습니까?")
+
+        builder.setPositiveButton("나가기") { _, _ ->
+
+            //현재 선택한 방의 RoomID와 로그인 사람 ID를 가져와서 DB에서 삭제하는 코드 넣기
+
+
+
+
+
+
+
+
+
+
+            (myRoomRecyclerView.adapter as MyRoomAdapter).removeItem(position)
+            UpdateUI()
+        }
+
+        builder.setNegativeButton("취소") { _, _ ->
+            // 사용자가 취소를 선택한 경우 아무것도 하지 않음
+        }
+
+        builder.show()
+    }
+
 }
