@@ -1,4 +1,4 @@
-package com.example.findfriend
+package com.example.findfriend.ui.Login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,17 +6,19 @@ import com.example.findfriend.databinding.ActivityCreateAccountBinding
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.findfriend.ui.Signup
-import com.example.findfriend.ui.SignupResponse
-import com.example.findfriend.ui.SignupService
+import com.example.findfriend.Settings.GlobalApplication
+import com.example.findfriend.ui.MainActivity
+import com.example.findfriend.connectDB.Signup
+import com.example.findfriend.connectDB.SignupResponse
+import com.example.findfriend.connectDB.SignupService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-private lateinit var binding: ActivityCreateAccountBinding
 class CreateAccountActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCreateAccountBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityCreateAccountBinding.inflate(layoutInflater)
@@ -50,6 +52,9 @@ class CreateAccountActivity : AppCompatActivity() {
                     if (successValue != null) {
                         val issuc = successValue.success
                         if (issuc) {
+                            GlobalApplication.prefs.setString("email", "${textId}")
+                            GlobalApplication.prefs.setString("password", "${textPw}")
+                            GlobalApplication.prefs.setString("nickname", "${textNick}")
                             Toast.makeText(applicationContext, "아이디 생성 성공", Toast.LENGTH_SHORT).show()
                             //아이디 생성 후 메인으로 이동
                             val intent = Intent(this@CreateAccountActivity, MainActivity::class.java)

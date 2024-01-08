@@ -1,4 +1,4 @@
-package com.example.findfriend
+package com.example.findfriend.Settings
 
 import android.content.Context
 import android.content.SharedPreferences

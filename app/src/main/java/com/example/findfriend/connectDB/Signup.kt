@@ -1,4 +1,4 @@
-package com.example.findfriend.ui
+package com.example.findfriend.connectDB
 
 import com.google.gson.annotations.SerializedName
 

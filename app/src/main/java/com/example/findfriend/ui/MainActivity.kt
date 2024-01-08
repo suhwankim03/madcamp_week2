@@ -1,12 +1,12 @@
-package com.example.findfriend
+package com.example.findfriend.ui
 
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.findfriend.R
 import com.example.findfriend.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

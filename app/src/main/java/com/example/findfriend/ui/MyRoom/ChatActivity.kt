@@ -1,17 +1,12 @@
-package com.example.findfriend
+package com.example.findfriend.ui.MyRoom
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import com.example.findfriend.Settings.GlobalApplication
 import com.example.findfriend.databinding.ActivityChatBinding
-import com.example.findfriend.ui.RoomService
-import com.example.findfriend.ui.joinRoom
-import com.example.findfriend.ui.joinRoomResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.findfriend.connectDB.RoomService
+import com.example.findfriend.ui.MainActivity
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -42,7 +37,12 @@ class ChatActivity : AppCompatActivity() {
         val current_people = binding.currentNumber
         val myID = GlobalApplication.prefs.getString("email","email 검색 오류")
         val completeButton =binding.completeButton
+        val goBackButton = binding.backButton
 
+        goBackButton.setOnClickListener {
+            val intent = Intent(this@ChatActivity, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         roomID.text = intent.getStringExtra("roomID")
         roomName.text = intent.getStringExtra("roomName")

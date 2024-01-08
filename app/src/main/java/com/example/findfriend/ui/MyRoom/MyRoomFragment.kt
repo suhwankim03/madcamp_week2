@@ -1,41 +1,27 @@
 package com.example.findfriend.ui.MyRoom
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.findfriend.CreateAccountActivity
-import com.example.findfriend.GlobalApplication.Companion.prefs
-import com.example.findfriend.MainActivity
-import com.example.findfriend.R
+import com.example.findfriend.Settings.GlobalApplication.Companion.prefs
 import com.example.findfriend.databinding.FragmentMyroomBinding
-import com.example.findfriend.ui.FindRoom.FindRoomDataModel
-import com.example.findfriend.ui.RoomService
-import com.example.findfriend.ui.addRoom
-import com.example.findfriend.ui.addRoomResponse
-import com.example.findfriend.ui.delete
-import com.example.findfriend.ui.deleteResponse
-import com.example.findfriend.ui.withdraw
-import com.example.findfriend.ui.withdrawResponse
-import com.google.gson.annotations.SerializedName
+import com.example.findfriend.connectDB.RoomService
+import com.example.findfriend.connectDB.delete
+import com.example.findfriend.connectDB.deleteResponse
+import com.example.findfriend.connectDB.withdraw
+import com.example.findfriend.connectDB.withdrawResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 class MyRoomFragment : Fragment() {
 
@@ -90,7 +76,7 @@ class MyRoomFragment : Fragment() {
     }
 
     fun UpdateUI(){
-        roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
+        roomService.getMyRoom(id).enqueue(object : Callback<List<MyRoomDataModel>> {
             override fun onResponse(
                 call: Call<List<MyRoomDataModel>>,
                 response: Response<List<MyRoomDataModel>>
@@ -126,7 +112,7 @@ class MyRoomFragment : Fragment() {
     private fun showDeleteDialog(position: Int) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("파티 탈퇴")
-        builder.setMessage("파티에서 나가시겠습니까?")
+        builder.setMessage("파티에서 나가시겠습니까?/n 방장이 나갈시 파티는 사라집니다.")
 
         builder.setPositiveButton("나가기") { _, _ ->
             val thisRoom = myRoomViewModel.getMyRoom(position)

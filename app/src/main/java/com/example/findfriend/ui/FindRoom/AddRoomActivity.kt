@@ -1,17 +1,16 @@
-package com.example.findfriend
+package com.example.findfriend.ui.FindRoom
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.findfriend.Settings.GlobalApplication
 import com.example.findfriend.databinding.ActivityAddRoomBinding
-import com.example.findfriend.ui.RoomService
-import com.example.findfriend.ui.SignupService
-import com.example.findfriend.ui.addRoom
-import com.example.findfriend.ui.addRoomResponse
-import com.google.gson.annotations.SerializedName
+import com.example.findfriend.connectDB.RoomService
+import com.example.findfriend.connectDB.addRoom
+import com.example.findfriend.connectDB.addRoomResponse
+import com.example.findfriend.ui.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,7 +21,7 @@ class AddRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddRoomBinding
     private lateinit var retrofit: Retrofit
-    private lateinit var roomService:RoomService
+    private lateinit var roomService: RoomService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddRoomBinding.inflate(layoutInflater)
@@ -43,6 +42,14 @@ class AddRoomActivity : AppCompatActivity() {
         val current_people:Int = 0
         val myID = GlobalApplication.prefs.getString("email","email 검색 오류")
         val completeButton =binding.completeButton
+        val goBackButton = binding.backButton
+
+        goBackButton.setOnClickListener {
+            val intent = Intent(this@AddRoomActivity, MainActivity::class.java)
+            startActivity(intent)
+            //FindRoomFragment로 이동할 수 있게 코드 추가하면 좋을듯
+        }
+
 
         completeButton.setOnClickListener {
             //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
@@ -59,6 +66,7 @@ class AddRoomActivity : AppCompatActivity() {
                             Toast.makeText(this@AddRoomActivity, "방 생성!", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@AddRoomActivity, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         } else {
                             Toast.makeText(this@AddRoomActivity, "방 생성 실패!", Toast.LENGTH_SHORT).show()
                         }
