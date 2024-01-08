@@ -2,23 +2,14 @@ package com.example.findfriend.ui.MyRoom
 
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemLongClickListener
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.findfriend.ChatActivity
-import com.example.findfriend.JoinRoomActivity
 import com.example.findfriend.R
-import com.example.findfriend.ui.FindRoom.FindRoomAdapter
-import java.sql.Date
 
 class MyRoomAdapter(val myRoomList: MutableList<MyRoomDataModel?>):
     RecyclerView.Adapter<MyRoomAdapter.ViewHolder>() {

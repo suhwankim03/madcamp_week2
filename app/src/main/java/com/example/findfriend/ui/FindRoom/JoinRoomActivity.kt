@@ -1,17 +1,16 @@
-package com.example.findfriend
+package com.example.findfriend.ui.FindRoom
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
-import com.example.findfriend.databinding.ActivityAddRoomBinding
+import com.example.findfriend.Settings.GlobalApplication
 import com.example.findfriend.databinding.ActivityJoinRoomBinding
-import com.example.findfriend.ui.RoomService
-import com.example.findfriend.ui.addRoom
-import com.example.findfriend.ui.addRoomResponse
-import com.example.findfriend.ui.joinRoom
-import com.example.findfriend.ui.joinRoomResponse
+import com.example.findfriend.connectDB.RoomService
+import com.example.findfriend.connectDB.joinRoom
+import com.example.findfriend.connectDB.joinRoomResponse
+import com.example.findfriend.ui.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -73,6 +72,7 @@ class JoinRoomActivity : AppCompatActivity() {
                             Toast.makeText(this@JoinRoomActivity, "방에 합류!", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@JoinRoomActivity, MainActivity::class.java)
                             startActivity(intent)
+                            finish()
                         } else {
                             Toast.makeText(this@JoinRoomActivity, "방에 못들어감!", Toast.LENGTH_SHORT).show()
                         }

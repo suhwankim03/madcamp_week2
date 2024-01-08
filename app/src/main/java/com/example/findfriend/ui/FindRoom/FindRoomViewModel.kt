@@ -24,14 +24,4 @@ class FindRoomViewModel : ViewModel() {
         findRoomList.clear()
     }
 
-    fun findPosition(roomId: Int, roomName: String,roomDetail: String, limTime: Int, location: String?, maxPeople: Int, minPeople: Int, owner: String): Int{
-        var findRoom:FindRoomDataModel?
-        for (i in 0 until findRoomList.size){
-            findRoom = findRoomList[i]
-            if ((findRoom?.roomId==roomId)&&(findRoom?.roomName==roomName)&&(findRoom.roomDetail==roomDetail)&&(findRoom.limTime==limTime)&&(findRoom.location==location)&&(findRoom.maxPeople==maxPeople)&&(findRoom.minPeople==minPeople)&&(findRoom.owner==owner)){
-                return i
-            }
-        }
-        return -1
-    }
 }

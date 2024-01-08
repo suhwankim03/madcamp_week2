@@ -1,24 +1,19 @@
-package com.example.findfriend
+package com.example.findfriend.ui.Login
 
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.bumptech.glide.Glide
-import com.example.findfriend.GlobalApplication.Companion.prefs
+import com.example.findfriend.Settings.GlobalApplication.Companion.prefs
+import com.example.findfriend.ui.MainActivity
 import com.example.findfriend.databinding.ActivityLoginBinding
-import com.example.findfriend.ui.Login
-import com.example.findfriend.ui.LoginResponse
-import com.example.findfriend.ui.Signup
-import com.example.findfriend.ui.SignupResponse
-import com.example.findfriend.ui.SignupService
-import com.kakao.sdk.auth.model.OAuthToken
-import com.kakao.sdk.common.model.ClientError
-import com.kakao.sdk.common.model.ClientErrorCause
+import com.example.findfriend.connectDB.Login
+import com.example.findfriend.connectDB.LoginResponse
+import com.example.findfriend.connectDB.Signup
+import com.example.findfriend.connectDB.SignupResponse
+import com.example.findfriend.connectDB.SignupService
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +28,7 @@ private lateinit var kakaoId: String
 private lateinit var kakaonickname: String
 private lateinit var kakaoprofile: String
 private lateinit var retrofit: Retrofit
-private lateinit var loginService:SignupService
+private lateinit var loginService: SignupService
 
 
 class LoginActivity : AppCompatActivity() {
@@ -60,7 +55,6 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             var textId = id.text.toString()
             var textPw = password.text.toString()
-
 
             val login = Login(id = textId, password = textPw)
 
@@ -146,6 +140,9 @@ class LoginActivity : AppCompatActivity() {
                         if (successValue != null) {
                             val issuc = successValue.success
                             if (issuc) {
+                                prefs.setString("email", "${kakaoEmail}")
+                                prefs.setString("password", "${kakaoId}")
+                                prefs.setString("nickname", "${kakaonickname}")
                                 Toast.makeText(applicationContext, "카카오톡 회원가입", Toast.LENGTH_SHORT).show()
                                 //아이디 생성 후 메인으로 이동
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)

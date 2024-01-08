@@ -1,6 +1,7 @@
-package com.example.findfriend
+package com.example.findfriend.Settings
 
 import android.app.Application
+import com.example.findfriend.BuildConfig
 import com.kakao.sdk.common.KakaoSdk
 
 class GlobalApplication : Application() {

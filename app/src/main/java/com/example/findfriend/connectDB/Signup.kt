@@ -1,4 +1,4 @@
-package com.example.findfriend.ui
+package com.example.findfriend.connectDB
 
 import com.google.gson.annotations.SerializedName
 
@@ -53,3 +53,11 @@ data class withdrawResponse(
     val success: Boolean
 )
 
+data class delete(
+    @SerializedName("id") val myId: String?,
+    @SerializedName("room_id") val roomId: Int?
+)
+
+data class deleteResponse(
+    val success: Boolean
+)

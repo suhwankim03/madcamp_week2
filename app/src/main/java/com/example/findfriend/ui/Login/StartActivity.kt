@@ -1,18 +1,15 @@
-package com.example.findfriend
+package com.example.findfriend.ui.Login
 
 import android.content.Intent
-import android.icu.text.CaseMap.Title
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.findfriend.GlobalApplication.Companion.prefs
+import com.example.findfriend.R
 
 lateinit var fadeInAnim : Animation
 lateinit var appLogo : ImageView
@@ -33,7 +30,7 @@ class StartActivity : AppCompatActivity() {
             Handler(Looper.getMainLooper()).postDelayed({
 
                 // 일정 시간이 지나면 MainActivity로 이동
-                val intent= Intent( this,LoginActivity::class.java)
+                val intent= Intent( this, LoginActivity::class.java)
                 startActivity(intent)
 
                 // 이전 키를 눌렀을 때 스플래스 스크린 화면으로 이동을 방지하기 위해

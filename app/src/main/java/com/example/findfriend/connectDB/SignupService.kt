@@ -1,4 +1,4 @@
-package com.example.findfriend.ui
+package com.example.findfriend.connectDB
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Headers

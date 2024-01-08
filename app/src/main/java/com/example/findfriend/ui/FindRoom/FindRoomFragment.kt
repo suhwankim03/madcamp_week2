@@ -6,15 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.findfriend.AddRoomActivity
-import com.example.findfriend.MainActivity
 import com.example.findfriend.databinding.FragmentFindroomBinding
-import com.example.findfriend.ui.RoomService
+import com.example.findfriend.connectDB.RoomService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -54,9 +51,7 @@ class FindRoomFragment : Fragment() {
 
         var roomService = retrofit.create(RoomService::class.java)
 
-        Log.d("tag","룸서비스(62행) 실행 완료")
-
-        roomService.getRoom().enqueue(object : Callback<List<FindRoomDataModel>> {
+        roomService.getAllRoom().enqueue(object : Callback<List<FindRoomDataModel>> {
             override fun onResponse(call: Call<List<FindRoomDataModel>>, response: Response<List<FindRoomDataModel>>) {
                 Log.d("69행","${response}")
                 if (response.isSuccessful) {
@@ -90,10 +85,6 @@ class FindRoomFragment : Fragment() {
             val intent = Intent(activity, AddRoomActivity::class.java)
             startActivity(intent)
         }
-
-
-
-
         return root
     }
 
