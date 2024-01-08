@@ -22,6 +22,11 @@ import com.example.findfriend.R
 import com.example.findfriend.databinding.FragmentMyroomBinding
 import com.example.findfriend.ui.FindRoom.FindRoomDataModel
 import com.example.findfriend.ui.RoomService
+import com.example.findfriend.ui.addRoom
+import com.example.findfriend.ui.addRoomResponse
+import com.example.findfriend.ui.withdraw
+import com.example.findfriend.ui.withdrawResponse
+import com.google.gson.annotations.SerializedName
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -38,7 +43,7 @@ class MyRoomFragment : Fragment() {
     private lateinit var myRoomViewModel : MyRoomViewModel
     private lateinit var retrofit: Retrofit
     private lateinit var roomService: RoomService
-
+    private val id = prefs.getString("email","email 검색 오류")
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -83,18 +88,13 @@ class MyRoomFragment : Fragment() {
     }
 
     fun UpdateUI(){
-        val id = prefs.getString("email","email 검색 오류")
         roomService.getRoom2(id).enqueue(object : Callback<List<MyRoomDataModel>> {
             override fun onResponse(
                 call: Call<List<MyRoomDataModel>>,
                 response: Response<List<MyRoomDataModel>>
             ) {
-                Log.d("69행", "${response}")
                 if (response.isSuccessful) {
                     val myRoom = response.body()
-                    Log.d("73행", "${myRoom}")
-
-
                     myRoomViewModel.clearMyRoomList()
                     for (i in 0 until myRoom!!.size) {
                         val roomID = myRoom[i].roomId
@@ -106,9 +106,6 @@ class MyRoomFragment : Fragment() {
                         val currentPeople = myRoom[i].minPeople
                         val ownerName = myRoom[i].owner
                         myRoomViewModel.addMyRoom(MyRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
-
-
-                        Log.d("79행", "${myRoomViewModel.getMyRoomList()}")
                     }
                     myRoomAdapter.notifyDataSetChanged()
                     binding.swipeLayout.isRefreshing = false
@@ -132,17 +129,12 @@ class MyRoomFragment : Fragment() {
         builder.setPositiveButton("나가기") { _, _ ->
 
             //현재 선택한 방의 RoomID와 로그인 사람 ID를 가져와서 DB에서 삭제하는 코드 넣기
+            val thisRoom = myRoomViewModel.getMyRoom(position)
 
+            val RoomID = thisRoom?.roomId
+            Log.d("tag","${RoomID}")
 
-
-
-
-
-
-
-
-
-            (myRoomRecyclerView.adapter as MyRoomAdapter).removeItem(position)
+            withdrawRoom(RoomID)
             UpdateUI()
         }
 
@@ -152,5 +144,27 @@ class MyRoomFragment : Fragment() {
 
         builder.show()
     }
+    private fun withdrawRoom(roomID: Int?){
+        val withdraw = withdraw(roomId = roomID, myId = id)
+        roomService.requestWithdraw(withdraw).enqueue(object: Callback<withdrawResponse> {
+            override fun onResponse(
+                call: Call<withdrawResponse>,
+                response: Response<withdrawResponse>
+            ) {
+                val successValue = response.body()
+                if (successValue != null) {
+                    val issuc = successValue.success
+                    if (issuc) {
+                        //성공시 리턴하고 싶으면 여기 적기
+                    } else {
+                        //성공시 리턴하고 싶으면 여기 적기
+                    }
+                }
+            }
+            override fun onFailure(call: Call<withdrawResponse>, t: Throwable) {
+                Log.e("API Request", "Error: ${t.message}")
+            }
+        })
 
+    }
 }
