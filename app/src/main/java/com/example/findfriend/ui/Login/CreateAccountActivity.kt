@@ -26,41 +26,56 @@ class CreateAccountActivity : AppCompatActivity() {
         val id = binding.writeId
         val password = binding.writePassword
         val nickname = binding.writeNickname
+/////////////////////////////////////////////////
+
+/////////////////////////////////////////////////
+
 
         button.setOnClickListener {
             var textId = id.text.toString()
             var textPw = password.text.toString()
             var textNick = nickname.text.toString()
 
-            val signup = Signup(id = textId, password = textPw, nickname = textNick)
+            if (textId.isEmpty()) {
+                Toast.makeText(applicationContext, "아이디를 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (textPw.isEmpty()) {
+                Toast.makeText(applicationContext, "비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (textNick.isEmpty()) {
+                Toast.makeText(applicationContext, "닉네임을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else {
+                val signup = Signup(id = textId, password = textPw, nickname = textNick)
 
-            signupService.requestSignup(signup).enqueue(object: Callback<SignupResponse>{
-                override fun onResponse(
-                    call: Call<SignupResponse>,
-                    response: Response<SignupResponse>
-                ) {
-                    val successValue = response.body()
-                    if (successValue != null) {
-                        val issuc = successValue.success
-                        if (issuc) {
-                            GlobalApplication.prefs.setString("email", "${textId}")
-                            GlobalApplication.prefs.setString("password", "${textPw}")
-                            GlobalApplication.prefs.setString("nickname", "${textNick}")
-                            Toast.makeText(applicationContext, "아이디 생성 성공", Toast.LENGTH_SHORT).show()
-                            //아이디 생성 후 메인으로 이동
-                            val intent = Intent(this@CreateAccountActivity, MainActivity::class.java)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(applicationContext, "아이디 중복", Toast.LENGTH_SHORT).show()
+                signupService.requestSignup(signup).enqueue(object: Callback<SignupResponse>{
+                    override fun onResponse(
+                        call: Call<SignupResponse>,
+                        response: Response<SignupResponse>
+                    ) {
+                        val successValue = response.body()
+                        if (successValue != null) {
+                            val issuc = successValue.success
+                            if (issuc) {
+                                GlobalApplication.prefs.setString("email", "${textId}")
+                                GlobalApplication.prefs.setString("password", "${textPw}")
+                                GlobalApplication.prefs.setString("nickname", "${textNick}")
+                                Toast.makeText(applicationContext, "아이디 생성 성공", Toast.LENGTH_SHORT).show()
+                                //아이디 생성 후 메인으로 이동
+                                val intent = Intent(this@CreateAccountActivity, MainActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(applicationContext, "아이디 중복", Toast.LENGTH_SHORT).show()
+                            }
                         }
+
                     }
 
-                }
+                    override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
+                        Log.e("API Request", "Error: ${t.message}")
+                    }
+                })
+            }
 
-                override fun onFailure(call: Call<SignupResponse>, t: Throwable) {
-                    Log.e("API Request", "Error: ${t.message}")
-                }
-            })
+
+
         }
     }
 }

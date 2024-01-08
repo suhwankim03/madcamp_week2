@@ -49,45 +49,53 @@ class LoginActivity : AppCompatActivity() {
             var textId = id.text.toString()
             var textPw = password.text.toString()
 
-            val login = Login(id = textId, password = textPw)
+            if (textId.isEmpty()) {
+                Toast.makeText(applicationContext, "아이디를 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (textPw.isEmpty()) {
+                Toast.makeText(applicationContext, "비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else {
+                val login = Login(id = textId, password = textPw)
 
-            signupService.requestLogin(login).enqueue(object : Callback<LoginResponse> {
-                override fun onResponse(
-                    call: Call<LoginResponse>,
-                    response: Response<LoginResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val successValue = response.body()
-                        if (successValue != null) {
-                            val issuc = successValue.success
-                            if (issuc) {
-                                prefs.setString("email", "${textId}")
-                                prefs.setString("password", "${textPw}")
-                                findNickName(textId)
-                                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            } else {
-                                Toast.makeText(
-                                    applicationContext,
-                                    "잘못된 로그인 시도입니다",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                signupService.requestLogin(login).enqueue(object : Callback<LoginResponse> {
+                    override fun onResponse(
+                        call: Call<LoginResponse>,
+                        response: Response<LoginResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            val successValue = response.body()
+                            if (successValue != null) {
+                                val issuc = successValue.success
+                                if (issuc) {
+                                    prefs.setString("email", "${textId}")
+                                    prefs.setString("password", "${textPw}")
+                                    findNickName(textId)
+                                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    Toast.makeText(
+                                        applicationContext,
+                                        "잘못된 로그인 시도입니다",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "서버 응답이 실패했습니다.(${response.code()})",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        Toast.makeText(
-                            applicationContext,
-                            "서버 응답이 실패했습니다.(${response.code()})",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     }
-                }
 
-                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                    Log.e("API Request", "Error: ${t.message}")
-                }
-            })
+                    override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                        Log.e("API Request", "Error: ${t.message}")
+                    }
+                })
+            }
+
+
         }
 
         //계정 생성 버튼 클릭
