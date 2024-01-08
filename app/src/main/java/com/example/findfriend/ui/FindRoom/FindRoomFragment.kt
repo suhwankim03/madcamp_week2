@@ -1,14 +1,18 @@
 package com.example.findfriend.ui.FindRoom
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.findfriend.AddRoomActivity
+import com.example.findfriend.MainActivity
 import com.example.findfriend.databinding.FragmentFindroomBinding
 import com.example.findfriend.ui.RoomService
 import retrofit2.Call
@@ -41,6 +45,8 @@ class FindRoomFragment : Fragment() {
         findRoomAdapter = FindRoomAdapter(findRoomViewModel.getFindRoomList())
         findRoomRecyclerView.adapter = findRoomAdapter
 
+        val addRoomButton = binding.addRoomButton
+
         var retrofit = Retrofit.Builder()
             .baseUrl("http://143.248.199.213:5000")
             .addConverterFactory(GsonConverterFactory.create())
@@ -50,8 +56,6 @@ class FindRoomFragment : Fragment() {
 
         Log.d("tag","룸서비스(62행) 실행 완료")
 
-
-        val id = "asd" // 이거 나중에 사용자 아이디를 받아와야 함.
         roomService.getRoom().enqueue(object : Callback<List<FindRoomDataModel>> {
             override fun onResponse(call: Call<List<FindRoomDataModel>>, response: Response<List<FindRoomDataModel>>) {
                 Log.d("69행","${response}")
@@ -70,6 +74,7 @@ class FindRoomFragment : Fragment() {
                         val ownerName = findRoom[i].owner
                         findRoomViewModel.addMyRoom(FindRoomDataModel(roomID, roomName, roomDetail, limTime, location, maxPeople, currentPeople, ownerName))
                         Log.d("79행","${findRoomViewModel.getFindRoomList()}")
+                        findRoomAdapter.notifyDataSetChanged()
                     }
                 } else {
                     // 서버 응답이 실패했을 때의 처리
@@ -80,6 +85,14 @@ class FindRoomFragment : Fragment() {
                 // 네트워크 요청 자체가 실패했을 때의 처리
             }
         })
+
+        addRoomButton.setOnClickListener {
+            val intent = Intent(activity, AddRoomActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
 
         return root
     }

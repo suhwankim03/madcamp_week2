@@ -16,33 +16,20 @@
         android:fontFamily="@font/sejong_hospital_bold"
         android:text="나의 파티"
         android:textColor="@color/carrot"
-        android:textSize="35dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="35dp" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayout"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center">
 
         <androidx.recyclerview.widget.RecyclerView
 
             android:id="@+id/myRoomView"
             android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/myRoomHeader" />
-
+            android:layout_height="wrap_content"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

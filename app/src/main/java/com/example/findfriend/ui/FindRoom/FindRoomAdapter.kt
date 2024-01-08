@@ -1,6 +1,7 @@
 package com.example.findfriend.ui.FindRoom
 
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.view.LayoutInflater
@@ -8,27 +9,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.findfriend.JoinRoomActivity
 import com.example.findfriend.R
 import com.example.findfriend.ui.MyRoom.MyRoomDataModel
 import java.sql.Date
 
-class FindRoomAdapter(private val findRoomList: MutableList<FindRoomDataModel?>):
+class FindRoomAdapter(val findRoomList: MutableList<FindRoomDataModel?>):
     RecyclerView.Adapter<FindRoomAdapter.ViewHolder>() {
 
     private var itemClickListener : OnItemClickListener? = null
-    private var longClickListener: OnItemLongClickListener? = null
     interface OnItemClickListener {
-        fun onClick(v: View, position: Int)
+        fun onItemClick(position: Int) {}
     }
 
-    interface OnItemLongClickListener {
-        fun onLongClick(position: Int)
-    }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
 
+        //val roomID: ImageView = itemView.findViewById(R.id.gallery_imageView)
+        //val roomDetail: ImageView = itemView.findViewById(R.id.gallery_imageView)
         val roomName: TextView = itemView.findViewById(R.id.roomName)
         val limTime: TextView = itemView.findViewById(R.id.limTime)
         val location: TextView = itemView.findViewById(R.id.location)
@@ -36,9 +37,12 @@ class FindRoomAdapter(private val findRoomList: MutableList<FindRoomDataModel?>)
         val maxPeople: TextView = itemView.findViewById(R.id.maxNumber)
         val owner: TextView = itemView.findViewById(R.id.owner)
 
-        //val roomID: ImageView = itemView.findViewById(R.id.gallery_imageView)
-        //val roomDetail: ImageView = itemView.findViewById(R.id.gallery_imageView)
-        //val minPeople: ImageView = itemView.findViewById(R.id.gallery_imageView)
+        init{
+            itemView.setOnClickListener{
+                itemClickListener?.onItemClick(adapterPosition)
+            }
+        }
+
 
     }
 
@@ -56,6 +60,18 @@ class FindRoomAdapter(private val findRoomList: MutableList<FindRoomDataModel?>)
         holder.currentPeople.text = findRoomModel?.minPeople.toString()
         holder.maxPeople.text = findRoomModel?.maxPeople.toString()
         holder.owner.text = findRoomModel?.owner
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView?.context, JoinRoomActivity::class.java )
+            intent.putExtra("roomName","${holder.roomName.text}")
+            intent.putExtra("limTime","${holder.limTime.text}")
+            intent.putExtra("location","${holder.location.text}")
+            intent.putExtra("currentPeople","${holder.currentPeople.text}")
+            intent.putExtra("maxPeople","${holder.maxPeople.text}")
+            intent.putExtra("owner","${holder.owner.text}")
+            ContextCompat.startActivity(holder.itemView.context, intent, null)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -64,10 +80,6 @@ class FindRoomAdapter(private val findRoomList: MutableList<FindRoomDataModel?>)
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
-    }
-
-    fun setItemLongClickListener(onItemLongClickListener: OnItemLongClickListener) {
-        this.longClickListener = onItemLongClickListener
     }
 
     fun removeItem(position: Int) {
