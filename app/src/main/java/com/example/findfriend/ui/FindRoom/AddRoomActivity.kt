@@ -42,32 +42,53 @@ class AddRoomActivity : AppCompatActivity() {
 
 
         completeButton.setOnClickListener {
-            //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
-            val newRoom = addRoom(roomName = roomName.text.toString(), roomDetail = roomDetail.text.toString(), limTime = limitTime.text.toString().toInt(), location = location.text.toString(), maxPeople = maxNum.text.toString().toInt(), minPeople = current_people, owner = myID, ownerNickname = myNickname)
-            roomService.requestAddRoom(newRoom).enqueue(object: Callback<addRoomResponse> {
-                override fun onResponse(
-                    call: Call<addRoomResponse>,
-                    response: Response<addRoomResponse>
-                ) {
-                    val successValue = response.body()
-                    if (successValue != null) {
-                        val issuc = successValue.success
-                        if (issuc) {
-                            Toast.makeText(this@AddRoomActivity, "방 생성!", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@AddRoomActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(this@AddRoomActivity, "방 생성 실패!", Toast.LENGTH_SHORT).show()
+            var txtroomName = roomName.text.toString()
+            var txtroomDetail = roomDetail.text.toString()
+            var txtlimTime = limitTime.text.toString()
+            var txtLocation = location.text.toString()
+            var txtmaxPeople = maxNum.text.toString()
+
+            if (txtroomName.isEmpty()) {
+                Toast.makeText(applicationContext, "방 이름을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (txtlimTime.isEmpty()) {
+                Toast.makeText(applicationContext, "제한 시간을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (txtmaxPeople.isEmpty()) {
+                Toast.makeText(applicationContext, "최대 인원을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (txtroomDetail.isEmpty()) {
+                Toast.makeText(applicationContext, "방 설명을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (txtLocation.isEmpty()) {
+                Toast.makeText(applicationContext, "장소를 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else{
+                //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
+                val newRoom = addRoom(roomName = txtroomName, roomDetail = txtroomDetail, limTime = txtlimTime.toInt(), location = txtLocation, maxPeople = txtmaxPeople.toInt(), minPeople = current_people, owner = myID, ownerNickname = myNickname)
+                roomService.requestAddRoom(newRoom).enqueue(object: Callback<addRoomResponse> {
+                    override fun onResponse(
+                        call: Call<addRoomResponse>,
+                        response: Response<addRoomResponse>
+                    ) {
+                        val successValue = response.body()
+                        if (successValue != null) {
+                            val issuc = successValue.success
+                            if (issuc) {
+                                Toast.makeText(this@AddRoomActivity, "방 생성!", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@AddRoomActivity, MainActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(this@AddRoomActivity, "방 생성 실패!", Toast.LENGTH_SHORT).show()
+                            }
                         }
+
                     }
 
-                }
+                    override fun onFailure(call: Call<addRoomResponse>, t: Throwable) {
+                        Log.e("API Request", "Error: ${t.message}")
+                    }
+                })
+            }
 
-                override fun onFailure(call: Call<addRoomResponse>, t: Throwable) {
-                    Log.e("API Request", "Error: ${t.message}")
-                }
-            })
+
+
         }
     }
 }
