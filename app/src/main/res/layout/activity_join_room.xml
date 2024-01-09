@@ -7,128 +7,207 @@
     tools:context=".ui.FindRoom.JoinRoomActivity">
 
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/x"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/HeaderBar"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="27dp"/>
+
+        <TextView
+            android:id="@+id/Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="선택한 파티"
+            android:textSize="35dp"
+            android:textColor="@color/carrot"
+            android:fontFamily="@font/sejong_hospital_bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"/>
+
+        <ImageButton
+            android:id="@+id/completeButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/check"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="27dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="27dp"/>
-
-    <TextView
-        android:id="@+id/Header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="선택한 방"
-        android:textSize="35dp"
-        android:textColor="@color/carrot"
-        android:fontFamily="@font/sejong_hospital_bold"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"/>
+        app:layout_constraintTop_toBottomOf="@id/HeaderBar">
 
-    <ImageButton
-        android:id="@+id/completeButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/check"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="27dp"/>
+        <ImageView
+            android:id="@+id/notepad_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/addroom_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/RoomName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="파티명을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/Header"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+            android:id="@+id/description_ownerNick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:textColor="@color/bgorange"
+            android:text="주최자"
+            android:textSize="25dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
 
-    <TextView
-        android:id="@+id/LimitTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="모임 시간을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/RoomName"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/MaxNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="최대 인원을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/LimitTime"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/RoomDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="파티를 소개해주세요"
-        app:layout_constraintTop_toBottomOf="@id/MaxNumber"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/Location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="장소를 입력하세요"
-        app:layout_constraintTop_toBottomOf="@id/RoomDetail"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/ownerID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="주최자"
-        app:layout_constraintTop_toBottomOf="@id/Location"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
-
-    <TextView
-        android:id="@+id/currentNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="현재 인원을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/ownerID"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+            android:id="@+id/ownerNickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주최자 이름임"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/description_ownerNick"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
 
 
-    <TextView
-        android:id="@+id/roomID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="roomID"
-        app:layout_constraintTop_toBottomOf="@id/currentNumber"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+            android:id="@+id/description_RoomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/bgorange"
+            android:text="파티 이름"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/ownerNickname"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
 
-    <TextView
-        android:id="@+id/ownerNickname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="주최자 닉네임"
-        app:layout_constraintTop_toBottomOf="@id/roomID"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+            android:id="@+id/RoomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="파티 이름"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/description_RoomName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/description_LimitTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/bgorange"
+            android:text="일정"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/RoomName"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/LimitTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1230"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/description_LimitTime"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/description_Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/bgorange"
+            android:text="장소"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/LimitTime"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장소장소장소"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/description_Location"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/description_MaxNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/bgorange"
+            android:text="현재 인원 / 최대 인원"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/Location"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/currentNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/description_MaxNumber"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/MaxNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/description_MaxNumber"
+            app:layout_constraintLeft_toRightOf="@id/currentNumber"/>
+
+        <TextView
+            android:id="@+id/description_Detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/bgorange"
+            android:text="파티 설명"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/MaxNumber"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+        <TextView
+            android:id="@+id/RoomDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="파티설명파티설명파티설명"
+            android:textSize="25dp"
+            app:layout_constraintTop_toBottomOf="@id/description_Detail"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="70dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

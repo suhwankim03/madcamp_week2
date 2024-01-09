@@ -27,29 +27,31 @@ class JoinRoomActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val roomName = binding.RoomName
-        val roomID = binding.roomID
         val roomDetail = binding.RoomDetail
         val limitTime = binding.LimitTime
         val location= binding.Location
         val maxNum= binding.MaxNumber
-        val ownerID= binding.ownerID
         val ownerNickname= binding.ownerNickname
         val current_people = binding.currentNumber
         val myID = GlobalApplication.prefs.getString("email","email 검색 오류")
         val completeButton =binding.completeButton
+        val goBackButton =binding.backButton
 
-
-        roomID.text = intent.getStringExtra("roomID")
         roomName.text = intent.getStringExtra("roomName")
         limitTime.text = intent.getStringExtra("limTime")
         location.text = intent.getStringExtra("location")
         roomDetail.text = intent.getStringExtra("roomDetail")
-        current_people.text = intent.getStringExtra("currentPeople")
+        current_people.text = intent.getStringExtra("currentPeople")+" / "
         maxNum.text = intent.getStringExtra("maxPeople")
-        ownerID.text = intent.getStringExtra("owner")
-        ownerNickname.text = intent.getStringExtra("ownerNickname")
+        ownerNickname.text = intent.getStringExtra("owner_nick")
 
-        val textRoomID = (roomID.text as String).toInt()
+        val textRoomID = (intent.getStringExtra("roomID") as String).toInt()
+
+        goBackButton.setOnClickListener {
+            val intent = Intent(this@JoinRoomActivity, MainActivity::class.java)
+            startActivity(intent)
+            //FindRoomFragment로 이동할 수 있게 코드 추가하면 좋을듯
+        }
 
         completeButton.setOnClickListener {
             //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
@@ -63,12 +65,12 @@ class JoinRoomActivity : AppCompatActivity() {
                     if (successValue != null) {
                         val issuc = successValue.success
                         if (issuc) {
-                            Toast.makeText(this@JoinRoomActivity, "방에 합류!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@JoinRoomActivity, "파티 합류!", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@JoinRoomActivity, MainActivity::class.java)
                             startActivity(intent)
                             finish()
                         } else {
-                            Toast.makeText(this@JoinRoomActivity, "방에 못들어감!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@JoinRoomActivity, "이미 참가한 파티입니다", Toast.LENGTH_SHORT).show()
                         }
                     }
 

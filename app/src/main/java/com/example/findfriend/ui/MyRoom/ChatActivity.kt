@@ -39,7 +39,6 @@ class ChatActivity : AppCompatActivity() {
         val ownerID= binding.owner
         val ownerNickname= binding.ownerNick
         val current_people = binding.currentNumber
-        val myID = GlobalApplication.prefs.getString("email","email 검색 오류")
         val goBackButton = binding.backButton
         val sendButton = binding.sendButton
         val editMessage = binding.sendMessage
@@ -67,7 +66,7 @@ class ChatActivity : AppCompatActivity() {
         ownerNickname.text = intent.getStringExtra("ownerNickname")
 
         init()
-        mSocket?.on("msg_to_client", onMessage)
+        mSocket?.on("msg_to_client${roomID.text}", onMessage)
     }
 
     var onMessage = Emitter.Listener { args ->
@@ -106,6 +105,12 @@ class ChatActivity : AppCompatActivity() {
             mSocket = IO.socket("http://143.248.199.213:5000")
             Log.d("SOCKET", "${mSocket}")
             mSocket?.connect()
+
+
+
+
+
+
         } catch (e: URISyntaxException) {
             e.printStackTrace()
         }
