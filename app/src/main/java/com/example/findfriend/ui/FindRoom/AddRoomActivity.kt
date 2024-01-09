@@ -52,8 +52,12 @@ class AddRoomActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "방 이름을 입력해 주세요", Toast.LENGTH_SHORT).show()
             }else if (txtlimTime.isEmpty()) {
                 Toast.makeText(applicationContext, "제한 시간을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (!isNumeric(txtlimTime)) {
+                Toast.makeText(applicationContext, "제한 시간은 숫자로 입력해 주세요", Toast.LENGTH_SHORT).show()
             }else if (txtmaxPeople.isEmpty()) {
                 Toast.makeText(applicationContext, "최대 인원을 입력해 주세요", Toast.LENGTH_SHORT).show()
+            }else if (!isNumeric(txtmaxPeople)) {
+                Toast.makeText(applicationContext, "최대 인원은 숫자로 입력해 주세요", Toast.LENGTH_SHORT).show()
             }else if (txtroomDetail.isEmpty()) {
                 Toast.makeText(applicationContext, "방 설명을 입력해 주세요", Toast.LENGTH_SHORT).show()
             }else if (txtLocation.isEmpty()) {
@@ -90,5 +94,8 @@ class AddRoomActivity : AppCompatActivity() {
 
 
         }
+    }
+    private fun isNumeric(input: String): Boolean {
+        return input.toIntOrNull() != null
     }
 }

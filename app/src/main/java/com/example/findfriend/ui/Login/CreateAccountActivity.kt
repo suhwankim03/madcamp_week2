@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.findfriend.databinding.ActivityCreateAccountBinding
 import android.os.Bundle
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
 import com.example.findfriend.Settings.GlobalApplication
@@ -26,9 +29,64 @@ class CreateAccountActivity : AppCompatActivity() {
         val id = binding.writeId
         val password = binding.writePassword
         val nickname = binding.writeNickname
-/////////////////////////////////////////////////
 
-/////////////////////////////////////////////////
+        //글자수 제한 설정.
+        val inputFilter = InputFilter.LengthFilter(7)
+
+        id.filters = arrayOf(inputFilter)
+        id.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.idnum.text = "0 / 7"
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var textId = id.text.toString()
+                binding.idnum.text = textId.length.toString() + " / 7"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                var textId = id.text.toString()
+                binding.idnum.text = textId.length.toString() + " / 7"
+            }
+
+        })
+
+        password.filters = arrayOf(inputFilter)
+        password.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.pwnum.text = "0 / 7"
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var textPw = password.text.toString()
+                binding.pwnum.text = textPw.length.toString() + " / 7"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                var textPw = password.text.toString()
+                binding.pwnum.text = textPw.length.toString() + " / 7"
+            }
+
+        })
+
+        nickname.filters = arrayOf(inputFilter)
+        nickname.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.nicknum.text = "0 / 7"
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                var textNick = nickname.text.toString()
+                binding.nicknum.text = textNick.length.toString() + " / 7"
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                var textNick = nickname.text.toString()
+                binding.nicknum.text = textNick.length.toString() + " / 7"
+            }
+
+        })
+
 
 
         button.setOnClickListener {
