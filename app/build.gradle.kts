@@ -72,6 +72,6 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation("androidx.preference:preference-ktx:1.1.1")
-    implementation("io.socket:socket.io-client:1.0.0")
+    implementation ("io.socket:socket.io-client:2.0.1")
 
 }

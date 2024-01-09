@@ -6,88 +6,115 @@
     android:layout_height="match_parent"
     tools:context=".ui.FindRoom.AddRoomActivity">
 
-
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/x"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="27dp"/>
-
-    <TextView
-        android:id="@+id/Header"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="새 파티 생성"
-        android:textSize="35dp"
-        android:textColor="@color/carrot"
-        android:fontFamily="@font/sejong_hospital_bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:id="@+id/HeaderBar"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/completeButton"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:background="@drawable/check"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="27dp"/>
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/x"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="27dp"/>
 
-    <EditText
-        android:id="@+id/writeRoomName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="파티명을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/Header"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        <TextView
+            android:id="@+id/Header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="새 파티 계획"
+            android:textSize="35dp"
+            android:textColor="@color/carrot"
+            android:fontFamily="@font/sejong_hospital_bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="20dp"/>
 
-    <EditText
-        android:id="@+id/writeLimitTime"
-        android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/completeButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/check"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="27dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:hint="모임 시간을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/writeRoomName"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/HeaderBar">
 
-    <EditText
-        android:id="@+id/writeMaxNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="최대 인원을 입력해주세요"
-        app:layout_constraintTop_toBottomOf="@id/writeLimitTime"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        <ImageView
+            android:id="@+id/notepad_background"
+            android:layout_width="337dp"
+            android:layout_height="581dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/writeRoomDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="파티를 소개해주세요"
-        app:layout_constraintTop_toBottomOf="@id/writeMaxNumber"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <EditText
-        android:id="@+id/writeLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="장소를 입력하세요"
-        app:layout_constraintTop_toBottomOf="@id/writeRoomDetail"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/writeRoomName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="파티명을 입력해주세요"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/writeLimitTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="모임 시간을 입력해주세요"
+            app:layout_constraintTop_toBottomOf="@id/writeRoomName"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/writeMaxNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="최대 인원을 입력해주세요"
+            app:layout_constraintTop_toBottomOf="@id/writeLimitTime"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/writeRoomDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="파티를 소개해주세요"
+            app:layout_constraintTop_toBottomOf="@id/writeMaxNumber"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/writeLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="장소를 입력하세요"
+            app:layout_constraintTop_toBottomOf="@id/writeRoomDetail"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

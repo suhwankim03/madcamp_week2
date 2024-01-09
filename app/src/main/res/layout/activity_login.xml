@@ -76,6 +76,7 @@
         app:layout_constraintLeft_toRightOf="@id/login_id_ic"
         android:layout_marginLeft="7.5dp" />
 
+
     <ImageView
         android:id="@+id/login_password"
         android:layout_width="wrap_content"
