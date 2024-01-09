@@ -49,21 +49,20 @@ class AddRoomActivity : AppCompatActivity() {
             var txtmaxPeople = maxNum.text.toString()
 
             if (txtroomName.isEmpty()) {
-                Toast.makeText(applicationContext, "방 이름을 입력해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "파티명을 정해주세요", Toast.LENGTH_SHORT).show()
             }else if (txtlimTime.isEmpty()) {
-                Toast.makeText(applicationContext, "제한 시간을 입력해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "만날 시간을 정해주세요", Toast.LENGTH_SHORT).show()
             }else if (!isNumeric(txtlimTime)) {
-                Toast.makeText(applicationContext, "제한 시간은 숫자로 입력해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "만날 시간은 숫자로 작성해주세요", Toast.LENGTH_SHORT).show()
             }else if (txtmaxPeople.isEmpty()) {
-                Toast.makeText(applicationContext, "최대 인원을 입력해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "최대 인원을 정해주세요", Toast.LENGTH_SHORT).show()
             }else if (!isNumeric(txtmaxPeople)) {
-                Toast.makeText(applicationContext, "최대 인원은 숫자로 입력해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "최대 인원은 숫자로 작성해주세요", Toast.LENGTH_SHORT).show()
             }else if (txtroomDetail.isEmpty()) {
-                Toast.makeText(applicationContext, "방 설명을 입력해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "파티 소개를 작성해주세요", Toast.LENGTH_SHORT).show()
             }else if (txtLocation.isEmpty()) {
-                Toast.makeText(applicationContext, "장소를 입력해 주세요", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "만날 장소를 정해주세요", Toast.LENGTH_SHORT).show()
             }else{
-                //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
                 val newRoom = addRoom(roomName = txtroomName, roomDetail = txtroomDetail, limTime = txtlimTime.toInt(), location = txtLocation, maxPeople = txtmaxPeople.toInt(), minPeople = current_people, owner = myID, ownerNickname = myNickname)
                 roomService.requestAddRoom(newRoom).enqueue(object: Callback<addRoomResponse> {
                     override fun onResponse(
@@ -74,7 +73,7 @@ class AddRoomActivity : AppCompatActivity() {
                         if (successValue != null) {
                             val issuc = successValue.success
                             if (issuc) {
-                                Toast.makeText(this@AddRoomActivity, "방 생성!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@AddRoomActivity, "파티 생성!", Toast.LENGTH_SHORT).show()
                                 val intent = Intent(this@AddRoomActivity, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()

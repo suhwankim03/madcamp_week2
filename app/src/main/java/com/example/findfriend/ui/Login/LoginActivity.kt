@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputFilter
 import android.util.Log
 import android.widget.Toast
 import com.example.findfriend.Settings.GlobalApplication
@@ -43,6 +44,11 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = binding.loginLogin
         val createAccountButton = binding.loginCreateAccount
         val loginByKaKaoButton = binding.loginLoginByKaKao
+
+        val inputFilter = InputFilter.LengthFilter(20)
+        id.filters = arrayOf(inputFilter)
+        password.filters = arrayOf(inputFilter)
+
 
         //로그인 버튼 클릭
         loginButton.setOnClickListener {
@@ -175,11 +181,13 @@ class LoginActivity : AppCompatActivity() {
                                 //아이디 생성 후 메인으로 이동
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             } else {
                                 Toast.makeText(applicationContext, "카카오톡 로그인", Toast.LENGTH_SHORT).show()
                                 //메인으로 이동
                                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             }
                         }
 
