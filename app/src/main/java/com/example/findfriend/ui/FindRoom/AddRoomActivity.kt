@@ -90,8 +90,6 @@ class AddRoomActivity : AppCompatActivity() {
                 })
             }
 
-
-
         }
     }
     private fun isNumeric(input: String): Boolean {
