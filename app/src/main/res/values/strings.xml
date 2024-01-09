@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FindFriend</string>
-    <string name="title_myRoom">myRoom</string>
-    <string name="title_findRoom">findRoom</string>
-    <string name="title_myProfile">myProfile</string>
+    <string name="title_myRoom">My Party</string>
+    <string name="title_findRoom">All Party</string>
+    <string name="title_myProfile">My Profile</string>
 </resources>

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.findfriend.Settings.GlobalApplication.Companion.prefs
 import com.example.findfriend.Settings.GlobalApplication.Companion.roomService
 import com.example.findfriend.databinding.FragmentMyroomBinding
-import com.example.findfriend.connectDB.RoomService
 import com.example.findfriend.connectDB.delete
 import com.example.findfriend.connectDB.deleteResponse
 import com.example.findfriend.connectDB.withdraw
@@ -21,8 +20,6 @@ import com.example.findfriend.connectDB.withdrawResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MyRoomFragment : Fragment() {
 
@@ -119,7 +116,6 @@ class MyRoomFragment : Fragment() {
             } else{ //방장이 아니면 단순 나가기
                 withdrawRoom(roomID)
             }
-
             UpdateUI()
         }
 

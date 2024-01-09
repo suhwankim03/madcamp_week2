@@ -119,6 +119,7 @@ class CreateAccountActivity : AppCompatActivity() {
                                 //아이디 생성 후 메인으로 이동
                                 val intent = Intent(this@CreateAccountActivity, MainActivity::class.java)
                                 startActivity(intent)
+                                finish()
                             } else {
                                 Toast.makeText(applicationContext, "아이디 중복", Toast.LENGTH_SHORT).show()
                             }

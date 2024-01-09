@@ -32,5 +32,7 @@ class GlobalApplication : Application() {
 
         roomService = retrofit.create(RoomService::class.java)
         signupService = retrofit.create(SignupService::class.java)
+
+
     }
 }

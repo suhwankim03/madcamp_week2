@@ -10,6 +10,8 @@ import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.findfriend.R
+import com.example.findfriend.Settings.GlobalApplication.Companion.prefs
+import com.example.findfriend.ui.MainActivity
 
 lateinit var fadeInAnim : Animation
 lateinit var appLogo : ImageView
@@ -26,17 +28,21 @@ class StartActivity : AppCompatActivity() {
         appLogo.startAnimation(fadeInAnim)
         appTitle.startAnimation(fadeInAnim)
 
-            // 일정 시간 지연 이후 실행하기 위한 코드
+        if(prefs.getString("email"," ")!=" "){
+            // 내부 저장소에 아이디가 있을 경우 바로 메인으로 연결
             Handler(Looper.getMainLooper()).postDelayed({
-
-                // 일정 시간이 지나면 MainActivity로 이동
+                val intent= Intent( this, MainActivity::class.java)
+                startActivity(intent)
+                finish()
+            }, 1500) // 1.5초 이후 실행
+        } else {
+            // 내부 저장소에 아이디가 없을 경우 로그인 화면으로 연결
+            Handler(Looper.getMainLooper()).postDelayed({
                 val intent= Intent( this, LoginActivity::class.java)
                 startActivity(intent)
-
-                // 이전 키를 눌렀을 때 스플래스 스크린 화면으로 이동을 방지하기 위해
-                // 이동한 다음 사용안함으로 finish 처리
                 finish()
+            }, 1500) // 1.5초 이후 실행
+        }
 
-            }, 1000) // 시간 1초 이후 실행
     }
 }
