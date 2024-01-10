@@ -2,6 +2,7 @@ package com.example.findfriend.ui.MyProfile
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,8 @@ class MyProfileFragment : Fragment() {
 
         binding.id.text = prefs.getString("email","이거 email 디폴트값임 나오면 오류임")
         binding.nickname.text = prefs.getString("nickname","이거 nickname 디폴트값임 나오면 오류임")
+
+        binding.id.movementMethod= ScrollingMovementMethod.getInstance()
 
         binding.LogoutButton.setOnClickListener{
             prefs.deleteString("email")

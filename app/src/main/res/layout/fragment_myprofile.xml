@@ -62,11 +62,13 @@
 
         <TextView
             android:id="@+id/id"
-            android:layout_width="wrap_content"
+            android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:text="아이디 샘플입니다"
             app:layout_constraintTop_toTopOf="@id/description_id"
             app:layout_constraintLeft_toRightOf="@id/description_id"
+            android:maxLines="1"
+            android:scrollHorizontally="true"
             android:textSize="30dp"/>
 
         <TextView

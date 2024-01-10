@@ -78,7 +78,7 @@ class AddRoomActivity : AppCompatActivity() {
                                 startActivity(intent)
                                 finish()
                             } else {
-                                Toast.makeText(this@AddRoomActivity, "방 생성 실패!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@AddRoomActivity, "파티 생성 실패!", Toast.LENGTH_SHORT).show()
                             }
                         }
 
