@@ -1,66 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="?attr/selectableItemBackground"
+    android:longClickable="true"
+    android:clickable="true"
+    android:focusable="true"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:elevation="8dp"
-        android:layout_margin="8dp">
+        android:id="@+id/myRoom_cardView"
+        android:layout_width="350dp"
+        android:layout_height="220dp"
+        app:cardElevation="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/owner_nick"
+                android:id="@+id/description_roomDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="주최자"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:id="@+id/LimitTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="일시"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
-
-            <TextView
-                android:id="@+id/Location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="장소"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
-
-
-            <TextView
-                android:id="@+id/MaxNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="최대 인원"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                android:textColor="@color/carrot"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/description_owner"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="22dp"
+                android:text="상세 :"/>
 
             <TextView
                 android:id="@+id/RoomDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="파티 소개"
-                android:textSize="18sp"
-                android:textColor="@android:color/black"/>
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                app:layout_constraintLeft_toRightOf="@id/description_roomDetail"
+                app:layout_constraintTop_toTopOf="@id/description_roomDetail"
+                app:layout_constraintBottom_toBottomOf="@id/description_roomDetail"
+                android:layout_marginLeft="10dp"
+                android:text="방의 상세 설명입니당"/>
+
+            <TextView
+                android:id="@+id/description_owner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                android:textColor="@color/carrot"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/description_limTime"
+                android:layout_marginBottom="6dp"
+                android:layout_marginLeft="22dp"
+                android:text="주최자 :"/>
+
+            <TextView
+                android:id="@+id/owner_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                app:layout_constraintLeft_toRightOf="@id/description_owner"
+                app:layout_constraintTop_toTopOf="@id/description_owner"
+                app:layout_constraintBottom_toBottomOf="@id/description_owner"
+                android:layout_marginLeft="10dp"
+                android:text="주최자"/>
+
+            <TextView
+                android:id="@+id/description_limTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                android:textColor="@color/carrot"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="22dp"
+                android:text="일시 :"/>
+
+            <TextView
+                android:id="@+id/LimitTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                app:layout_constraintLeft_toRightOf="@id/description_limTime"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="10dp"
+                android:text="2024년 01월 06일 오후 12:30"/>
+
+            <TextView
+                android:id="@+id/description_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                android:textColor="@color/carrot"
+                app:layout_constraintLeft_toLeftOf="@id/description_limTime"
+                app:layout_constraintTop_toBottomOf="@id/description_limTime"
+                android:layout_marginTop="6dp"
+                android:text="장소 :"/>
+
+            <TextView
+                android:id="@+id/Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                app:layout_constraintLeft_toRightOf="@id/description_location"
+                app:layout_constraintTop_toTopOf="@id/description_location"
+                app:layout_constraintBottom_toBottomOf="@id/description_location"
+                android:layout_marginLeft="10dp"
+                android:text="순헌관 1층"/>
+
+            <TextView
+                android:id="@+id/description_peoplenumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:textSize="22dp"
+                android:gravity="left"
+                android:textColor="@color/carrot"
+                app:layout_constraintLeft_toLeftOf="@id/description_location"
+                app:layout_constraintTop_toBottomOf="@id/description_location"
+                android:layout_marginTop="6dp"
+                android:text="인원 :"/>
+
+            <TextView
+                android:id="@+id/MaxNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kyobohandwriting2019"
+                android:layout_marginLeft="10dp"
+                android:textSize="22dp"
+                android:gravity="left"
+                app:layout_constraintLeft_toRightOf="@id/description_peoplenumber"
+                app:layout_constraintTop_toTopOf="@id/description_peoplenumber"
+                app:layout_constraintBottom_toBottomOf="@id/description_peoplenumber"
+                android:text="5"/>
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
     </androidx.cardview.widget.CardView>
-</LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

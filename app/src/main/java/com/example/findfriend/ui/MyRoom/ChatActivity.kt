@@ -128,7 +128,9 @@ class ChatActivity : AppCompatActivity() {
         }
 
         runOnUiThread {
-            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            scrollView.post {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            }
         }
     }
 
@@ -143,8 +145,10 @@ class ChatActivity : AppCompatActivity() {
 
         mSocket?.emit("message", obj)
         binding.sendMessage.setText("")
-        scrollView.post {
-            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        runOnUiThread {
+            scrollView.post {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            }
         }
     }
 
