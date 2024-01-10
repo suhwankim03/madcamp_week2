@@ -16,3 +16,4 @@ data class FindRoomDataModel(
 ){
     constructor() : this(0, null, null, 0, null, 0, 0, null,null)
 }
+

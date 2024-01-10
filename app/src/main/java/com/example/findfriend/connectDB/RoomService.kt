@@ -1,6 +1,7 @@
 package com.example.findfriend.connectDB
 import com.example.findfriend.ui.FindRoom.FindRoomDataModel
 import com.example.findfriend.ui.MyRoom.MyRoomDataModel
+import com.example.findfriend.ui.MyRoom.RoomChatDataModel
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -18,6 +19,12 @@ interface RoomService {
     fun getMyRoom(
         @Query("id") id: String
     ): Call<List<MyRoomDataModel>>
+
+    @Headers("Content-Type: application/json")
+    @GET("/get_chat")
+    fun getChat(
+        @Query("room_id") id: String
+    ): Call<List<RoomChatDataModel>>
 
     @Headers("Content-Type: application/json")
     @POST("/add_room")
