@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.text.InputFilter
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
+import android.view.GestureDetector
+import android.view.MotionEvent
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -30,8 +33,10 @@ class ChatActivity : AppCompatActivity() {
     private var mSocket: Socket? = null
     private var roomID: String? = null
     private lateinit var sendtext: TextView
+    private lateinit var scrollView : ScrollView
     private lateinit var binding: ActivityChatBinding
     private lateinit var chatViewModel : ChatViewModel
+    private lateinit var gestureDetector: GestureDetector
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChatBinding.inflate(layoutInflater)
@@ -51,10 +56,25 @@ class ChatActivity : AppCompatActivity() {
         val sendButton = binding.sendButton
         val editMessage = binding.sendMessage
         val chat = binding.ownerNick
+        scrollView = binding.scrollView
         sendtext = binding.ownerNick
         editMessage.filters = arrayOf(inputFilter)
-        chat.movementMethod=ScrollingMovementMethod.getInstance()
 
+
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onDoubleTap(e: MotionEvent): Boolean {
+                // 화면을 두 번 탭했을 때 호출되는 메서드
+                // 스크롤뷰를 아래로 스크롤
+                scrollView.post {
+                    scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+                }
+                return true
+            }
+        })
+
+        scrollView.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+        }
 
         goBackButton.setOnClickListener {
             val intent = Intent(this@ChatActivity, MainActivity::class.java)
@@ -78,6 +98,9 @@ class ChatActivity : AppCompatActivity() {
         getHistory()
 
         mSocket?.on("msg_to_client${roomID}", onMessage)
+        runOnUiThread {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        }
     }
 
     var onMessage = Emitter.Listener { args ->
@@ -105,6 +128,10 @@ class ChatActivity : AppCompatActivity() {
                     })
                 }
             }).start()
+        }
+
+        runOnUiThread {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
         }
     }
 
@@ -157,6 +184,7 @@ class ChatActivity : AppCompatActivity() {
 
                     runOnUiThread {
                         sendtext.text = combinedMessages
+                        scrollView.fullScroll(ScrollView.FOCUS_DOWN)
                     }
 
                 } else {
