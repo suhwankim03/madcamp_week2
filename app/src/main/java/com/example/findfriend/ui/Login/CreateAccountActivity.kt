@@ -25,6 +25,7 @@ class CreateAccountActivity : AppCompatActivity() {
         binding= ActivityCreateAccountBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val backbutton = binding.backButton
         val button = binding.createAccountButton
         val id = binding.writeId
         val password = binding.writePassword
@@ -87,7 +88,11 @@ class CreateAccountActivity : AppCompatActivity() {
 
         })
 
-
+        backbutton.setOnClickListener {
+            val intent = Intent(this@CreateAccountActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         button.setOnClickListener {
             var textId = id.text.toString()

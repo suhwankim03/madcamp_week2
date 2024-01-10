@@ -42,6 +42,7 @@ class JoinRoomActivity : AppCompatActivity() {
         location.text = intent.getStringExtra("location")
         roomDetail.text = intent.getStringExtra("roomDetail")
         current_people.text = intent.getStringExtra("currentPeople")+" / "
+        val current_num = intent.getStringExtra("currentPeople")?.toInt()
         maxNum.text = intent.getStringExtra("maxPeople")
         ownerNickname.text = intent.getStringExtra("owner_nick")
 
@@ -55,31 +56,40 @@ class JoinRoomActivity : AppCompatActivity() {
 
         completeButton.setOnClickListener {
             //작성 내용 null일 경우 오류나는 거 코드 추가 구현해줘야 함
-            val newRoom = joinRoom(roomId = textRoomID, myId= myID)
-            roomService.requestJoinRoom(newRoom).enqueue(object: Callback<joinRoomResponse> {
-                override fun onResponse(
-                    call: Call<joinRoomResponse>,
-                    response: Response<joinRoomResponse>
-                ) {
-                    val successValue = response.body()
-                    if (successValue != null) {
-                        val issuc = successValue.success
-                        if (issuc) {
-                            Toast.makeText(this@JoinRoomActivity, "파티 합류!", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(this@JoinRoomActivity, MainActivity::class.java)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(this@JoinRoomActivity, "이미 참가한 파티입니다", Toast.LENGTH_SHORT).show()
+            if (current_num != null) {
+                if (current_num >= maxNum.text.toString().toInt()){
+
+                    Toast.makeText(this@JoinRoomActivity, "파티가 꽉 찼습니다..", Toast.LENGTH_SHORT).show()
+
+                } else{
+                    val newRoom = joinRoom(roomId = textRoomID, myId= myID)
+                    roomService.requestJoinRoom(newRoom).enqueue(object: Callback<joinRoomResponse> {
+                        override fun onResponse(
+                            call: Call<joinRoomResponse>,
+                            response: Response<joinRoomResponse>
+                        ) {
+                            val successValue = response.body()
+                            if (successValue != null) {
+                                val issuc = successValue.success
+                                if (issuc) {
+                                    Toast.makeText(this@JoinRoomActivity, "파티 합류!", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(this@JoinRoomActivity, MainActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                } else {
+                                    Toast.makeText(this@JoinRoomActivity, "이미 참가한 파티입니다", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
                         }
-                    }
 
+                        override fun onFailure(call: Call<joinRoomResponse>, t: Throwable) {
+                            Log.e("API Request", "Error: ${t.message}")
+                        }
+                    })
                 }
+            }
 
-                override fun onFailure(call: Call<joinRoomResponse>, t: Throwable) {
-                    Log.e("API Request", "Error: ${t.message}")
-                }
-            })
         }
     }
 }
