@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="8dp"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/owner_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="주최자"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/LimitTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일시"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/Location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장소"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+
+
+            <TextView
+                android:id="@+id/MaxNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최대 인원"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/RoomDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="파티 소개"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"/>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

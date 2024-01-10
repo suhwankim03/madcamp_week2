@@ -29,7 +29,7 @@ class MyRoomAdapter(val myRoomList: MutableList<MyRoomDataModel?>):
 
 
         val roomID: TextView = itemView.findViewById(R.id.roomID)
-        //val roomDetail: ImageView = itemView.findViewById(R.id.gallery_imageView)
+        val roomDetail: TextView = itemView.findViewById(R.id.roomDetail)
         val roomName: TextView = itemView.findViewById(R.id.roomName)
         val limTime: TextView = itemView.findViewById(R.id.limTime)
         val location: TextView = itemView.findViewById(R.id.location)
@@ -70,6 +70,7 @@ class MyRoomAdapter(val myRoomList: MutableList<MyRoomDataModel?>):
         holder.maxPeople.text = myRoomModel?.maxPeople.toString()
         holder.ownerID.text = myRoomModel?.ownerID.toString()
         holder.ownerNickname.text = myRoomModel?.ownerNickname.toString()
+        holder.roomDetail.text = myRoomModel?.roomDetail.toString()
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView?.context, ChatActivity::class.java )
@@ -81,6 +82,7 @@ class MyRoomAdapter(val myRoomList: MutableList<MyRoomDataModel?>):
             intent.putExtra("maxPeople","${holder.maxPeople.text}")
             intent.putExtra("owner","${holder.ownerID.text}")
             intent.putExtra("owner_nick","${holder.ownerNickname.text}")
+            intent.putExtra("roomDetail","${holder.roomDetail.text}")
             ContextCompat.startActivity(holder.itemView.context, intent, null)
         }
 

@@ -7,9 +7,11 @@ import android.text.InputFilter
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.GestureDetector
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.findfriend.R
@@ -22,6 +24,7 @@ import io.socket.client.IO
 import io.socket.client.Socket
 import io.socket.emitter.Emitter
 import org.json.JSONObject
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +35,7 @@ class ChatActivity : AppCompatActivity() {
 
     private var mSocket: Socket? = null
     private var roomID: String? = null
+    private var ownerNickname: String? = null
     private lateinit var sendtext: TextView
     private lateinit var scrollView : ScrollView
     private lateinit var binding: ActivityChatBinding
@@ -46,12 +50,6 @@ class ChatActivity : AppCompatActivity() {
 
         val inputFilter = InputFilter.LengthFilter(27)
         val Header = binding.Header
-        val limitTime = binding.LimitTime
-        val location= binding.Location
-        val maxNum= binding.MaxNumber
-        val ownerID= binding.owner
-        val ownerNickname= binding.ownerNick
-        val current_people = binding.currentNumber
         val goBackButton = binding.backButton
         val sendButton = binding.sendButton
         val editMessage = binding.sendMessage
@@ -63,14 +61,16 @@ class ChatActivity : AppCompatActivity() {
 
         gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
             override fun onDoubleTap(e: MotionEvent): Boolean {
-                // 화면을 두 번 탭했을 때 호출되는 메서드
-                // 스크롤뷰를 아래로 스크롤
                 scrollView.post {
                     scrollView.fullScroll(ScrollView.FOCUS_DOWN)
                 }
                 return true
             }
         })
+
+        binding.detailButton.setOnClickListener {
+            showCardViewDialog()
+        }
 
         scrollView.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
@@ -87,19 +87,16 @@ class ChatActivity : AppCompatActivity() {
 
         //roomID.text = intent.getStringExtra("roomID")
         Header.text = intent.getStringExtra("roomName")
-        limitTime.text = intent.getStringExtra("limTime")
-        location.text = intent.getStringExtra("location")
-        current_people.text = intent.getStringExtra("currentPeople")
-        maxNum.text = intent.getStringExtra("maxPeople")
-        ownerID.text = intent.getStringExtra("owner")
-        ownerNickname.text = intent.getStringExtra("ownerNickname")
 
         init()
         getHistory()
 
         mSocket?.on("msg_to_client${roomID}", onMessage)
+
         runOnUiThread {
-            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            scrollView.post {
+                scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+            }
         }
     }
 
@@ -146,11 +143,15 @@ class ChatActivity : AppCompatActivity() {
 
         mSocket?.emit("message", obj)
         binding.sendMessage.setText("")
+        scrollView.post {
+            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+        }
     }
 
     private fun init() {
         val intent = intent
         roomID = intent.getStringExtra("roomID")
+        ownerNickname = intent.getStringExtra("ownerNickname")
         try {
             mSocket = IO.socket("http://143.248.199.213:5000")
             Log.d("SOCKET", "${mSocket}")
@@ -184,7 +185,9 @@ class ChatActivity : AppCompatActivity() {
 
                     runOnUiThread {
                         sendtext.text = combinedMessages
-                        scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+                        scrollView.post {
+                            scrollView.fullScroll(ScrollView.FOCUS_DOWN)
+                        }
                     }
 
                 } else {
@@ -197,6 +200,34 @@ class ChatActivity : AppCompatActivity() {
                 //네트워크 응답 자체가 실패했을 때의 처리
             }
         })
+    }
+
+    @SuppressLint("MissingInflatedId")
+    private fun showCardViewDialog() {
+        // 다이얼로그 레이아웃을 가져오기
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.myroomdetail_cardview, null)
+
+        // 다이얼로그 내부의 TextView에 원하는 정보 설정
+       // dialogView.textViewDialogContent.text = "This is the content of the dialog."
+        val limitTimeView = dialogView.findViewById<TextView>(R.id.LimitTime)
+        val locationView = dialogView.findViewById<TextView>(R.id.Location)
+        val maxNumView = dialogView.findViewById<TextView>(R.id.MaxNumber)
+        val ownerView = dialogView.findViewById<TextView>(R.id.owner_nick)
+        val roomDetailView = dialogView.findViewById<TextView>(R.id.RoomDetail)
+
+        limitTimeView.text = intent.getStringExtra("limTime")
+        locationView.text = intent.getStringExtra("location")
+        maxNumView.text = intent.getStringExtra("maxPeople")
+        ownerView.text = intent.getStringExtra("owner_nick")
+        roomDetailView.text = intent.getStringExtra("roomDetail")
+
+        // AlertDialog 생성 및 설정
+        val alertDialogBuilder = AlertDialog.Builder(this)
+            .setView(dialogView)
+
+        // 다이얼로그 표시
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
     override fun onDestroy() {
