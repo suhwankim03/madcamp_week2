@@ -25,7 +25,7 @@ data class LoginResponse(
 data class addRoom(
     @SerializedName("room_name") val roomName: String?,
     @SerializedName("room_detail") val roomDetail: String?,
-    @SerializedName("limtime") val limTime: Int,
+    @SerializedName("limtime") val limTime: String?,
     @SerializedName("location") val location: String?,
     @SerializedName("max_people") val maxPeople: Int,
     @SerializedName("min_people") val minPeople: Int,

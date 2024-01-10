@@ -1,9 +1,13 @@
 package com.example.findfriend.ui.FindRoom
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.DatePicker
+import android.widget.TimePicker
 import android.widget.Toast
 import com.example.findfriend.Settings.GlobalApplication
 import com.example.findfriend.Settings.GlobalApplication.Companion.roomService
@@ -14,10 +18,12 @@ import com.example.findfriend.ui.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
 
 class AddRoomActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddRoomBinding
+    private lateinit var selectedDate: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddRoomBinding.inflate(layoutInflater)
@@ -40,6 +46,9 @@ class AddRoomActivity : AppCompatActivity() {
             //FindRoomFragment로 이동할 수 있게 코드 추가하면 좋을듯
         }
 
+        limitTime.setOnClickListener {
+            showDatePickerDialog()
+        }
 
         completeButton.setOnClickListener {
             var txtroomName = roomName.text.toString()
@@ -52,8 +61,8 @@ class AddRoomActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "파티명을 정해주세요", Toast.LENGTH_SHORT).show()
             }else if (txtlimTime.isEmpty()) {
                 Toast.makeText(applicationContext, "만날 시간을 정해주세요", Toast.LENGTH_SHORT).show()
-            }else if (!isNumeric(txtlimTime)) {
-                Toast.makeText(applicationContext, "만날 시간은 숫자로 작성해주세요", Toast.LENGTH_SHORT).show()
+            /*}else if (!isNumeric(txtlimTime)) {
+                Toast.makeText(applicationContext, "만날 시간은 숫자로 작성해주세요", Toast.LENGTH_SHORT).show()*/
             }else if (txtmaxPeople.isEmpty()) {
                 Toast.makeText(applicationContext, "최대 인원을 정해주세요", Toast.LENGTH_SHORT).show()
             }else if (!isNumeric(txtmaxPeople)) {
@@ -63,7 +72,7 @@ class AddRoomActivity : AppCompatActivity() {
             }else if (txtLocation.isEmpty()) {
                 Toast.makeText(applicationContext, "만날 장소를 정해주세요", Toast.LENGTH_SHORT).show()
             }else{
-                val newRoom = addRoom(roomName = txtroomName, roomDetail = txtroomDetail, limTime = txtlimTime.toInt(), location = txtLocation, maxPeople = txtmaxPeople.toInt(), minPeople = current_people, owner = myID, ownerNickname = myNickname)
+                val newRoom = addRoom(roomName = txtroomName, roomDetail = txtroomDetail, limTime = txtlimTime, location = txtLocation, maxPeople = txtmaxPeople.toInt(), minPeople = current_people, owner = myID, ownerNickname = myNickname)
                 roomService.requestAddRoom(newRoom).enqueue(object: Callback<addRoomResponse> {
                     override fun onResponse(
                         call: Call<addRoomResponse>,
@@ -94,5 +103,44 @@ class AddRoomActivity : AppCompatActivity() {
     }
     private fun isNumeric(input: String): Boolean {
         return input.toIntOrNull() != null
+    }
+
+
+    private fun showDatePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            DatePickerDialog.OnDateSetListener { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDay: Int ->
+                selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+                binding.writeLimitTime.setText(selectedDate)
+                showTimePickerDialog()
+            },
+            year,
+            month,
+            day
+        )
+        datePickerDialog.show()
+    }
+
+    private fun showTimePickerDialog() {
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { _: TimePicker, selectedHour: Int, selectedMinute: Int ->
+                val selectedTime = "$selectedHour:$selectedMinute"
+                binding.writeLimitTime.setText("$selectedDate $selectedTime")
+            },
+            hour,
+            minute,
+            true
+        )
+        timePickerDialog.show()
     }
 }

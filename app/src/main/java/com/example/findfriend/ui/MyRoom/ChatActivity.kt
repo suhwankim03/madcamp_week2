@@ -152,7 +152,7 @@ class ChatActivity : AppCompatActivity() {
         val intent = intent
         roomID = intent.getStringExtra("roomID")
         try {
-            mSocket = IO.socket("http://172.10.8.242:80")
+            mSocket = IO.socket("http://143.248.199.213:5000")
             Log.d("SOCKET", "${mSocket}")
             mSocket?.connect()
 
