@@ -173,6 +173,7 @@ class LoginActivity : AppCompatActivity() {
                         prefs.setString("email", "${kakaoEmail}")
                         prefs.setString("password", "${kakaoId}")
                         prefs.setString("nickname", "${kakaonickname}")
+                        prefs.setString("profileImage", "${kakaoprofile}")
                         val successValue = response.body()
                         if (successValue != null) {
                             val issuc = successValue.success
@@ -197,6 +198,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 })
 
+                user.kakaoAccount?.profile?.thumbnailImageUrl.toString()
 
                 //binding.nicknametest.text = user.kakaoAccount?.profile?.nickname
                 //Glide.with(this).load(user.kakaoAccount?.profile?.thumbnailImageUrl).circleCrop().into(binding.profiletest)
